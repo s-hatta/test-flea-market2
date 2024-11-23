@@ -1,0 +1,60 @@
+h1 {
+    text-align: center;
+}
+
+.wrapper {
+    max-width: 720px;
+    margin: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.form__item {
+    width: 100%;
+    margin: 50px auto;
+}
+
+.form__item-label {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.form__item-input {
+    width: 100%;
+    height: 57.09px;
+
+    border-radius: 4px;
+    border-width: 1px;
+    border-color: #5f5f5f;
+
+    font-size: 24px;
+}
+
+.form__submit {
+    background: #ff5555;
+    border: none;
+    border-radius: 5px;
+    height: 65.25px;
+    width: 100%;
+
+    color: #fff;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+
+    cursor: pointer;
+}
+
+.link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 53.29px;
+    margin: 25px auto;
+}
+
+.link a {
+    font-size: 20px;
+    color: #0073cc;
+    text-decoration: none;
+}
