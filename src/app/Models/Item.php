@@ -12,7 +12,6 @@ class Item extends Model
         'condition_id',
         'price',
         'stock',
-        'brand_name',
         'detail',
         'img_url',
     ];
