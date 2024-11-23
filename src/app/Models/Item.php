@@ -8,6 +8,7 @@ class Item extends Model
 {
     protected $fillable = [
         'name',
+        'brand_name',
         'condition_id',
         'price',
         'stock',

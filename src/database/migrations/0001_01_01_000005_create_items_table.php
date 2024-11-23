@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('brand_name');
             $table->foreignId('condition_id')->constrained('conditions');
             $table->integer('price');
             $table->integer('stock');
