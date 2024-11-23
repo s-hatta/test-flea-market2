@@ -13,6 +13,8 @@
 </head>
 <body>
     @include('parts.header')
-    @yield('content')
+    <main class="main">
+        @yield('content')
+    </main>
 </body>
 </html>
