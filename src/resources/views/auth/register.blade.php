@@ -14,16 +14,19 @@
             <div class="form__item">
                 <div class="form__item-label">ユーザー名 </div>
                 <input class="form__item-input" type="text" name="name">
+                <div class="form__item-alert">{{$errors->first('name')}}</div>
             </div>
             {{--メールアドレス--}}
             <div class="form__item">
                 <div class="form__item-label">メールアドレス</div>
                 <input class="form__item-input" type="text" name="email">
+                <div class="form__item-alert">{{$errors->first('email')}}</div>
             </div>
             {{--パスワード--}}
             <div class="form__item">
                 <div class="form__item-label">パスワード</div>
                 <input class="form__item-input" type="password" name="password">
+                <div class="form__item-alert">{{$errors->first('password')}}</div>
             </div>
             {{--確認用パスワード--}}
             <div class="form__item">
