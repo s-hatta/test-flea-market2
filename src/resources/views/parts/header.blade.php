@@ -12,17 +12,16 @@
     <div class="header-nav">
         @if (Auth::check())
         <div class="header-nav__logout">
-            <form class="header-nav__logout-button" method="POST" action="{{ route('logout') }}">
+            <form class="header-nav__logout-button" method="POST" action="{{ url('logout') }}">
                 @csrf
                 <button type="submit">ログアウト</button>
             </form>
         </div>
         @else
         <div class="header-nav__login">
-            <form class="header-nav__login-button" method="GET" action="{{ route('login') }}">
-                @csrf
-                <button type="submit">ログイン</button>
-            </form>
+            <button class="header-nav__login-button" type="button" onclick="location.href='{{ url('login') }}'">
+                ログイン
+            </button>
         </div>
         @endif
         <div class="header-nav__mypage">
