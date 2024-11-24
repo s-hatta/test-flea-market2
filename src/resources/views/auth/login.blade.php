@@ -7,7 +7,7 @@
     <div class="wrapper">
         {{-- ログインフォーム --}}
         <h1>ログイン</h1>
-        <form class="form" method="POST" action="{{route('login')}}">
+        <form class="form" method="POST" action="{{url('login')}}">
             @csrf
             {{-- ユーザー名もしくはメールアドレス --}}
             <div class="form__item">
