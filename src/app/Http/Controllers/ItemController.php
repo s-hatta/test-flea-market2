@@ -9,7 +9,7 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $items = Item::select('id','name','img_url')->get();
+        $items = Item::all();
         return view('items/items', compact('items'));
     }
 }
