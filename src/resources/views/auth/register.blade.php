@@ -31,7 +31,7 @@
             {{--確認用パスワード--}}
             <div class="form__item">
                 <div class="form__item-label">確認用パスワード</div>
-                <input class="form__item-input" type="pssword" name="password_confirmation">
+                <input class="form__item-input" type="password" name="password_confirmation">
             </div>
             {{--登録実行--}}
             <button class="form__submit" type="submit">登録する</button>
