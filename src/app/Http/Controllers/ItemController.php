@@ -21,4 +21,14 @@ class ItemController extends Controller
         $conditions = Condition::all();
         return view('items/item_exhibit', compact('categories','conditions'));
     }
+    
+    public function show(Request $request)
+    {
+        $item = Item::where('id',$request['id'])->first();
+        $condition = $item->condition;
+        $categories = $item->categories;
+        $likes = $item->likes;
+        $comments = $item->comments;
+        return view('items/item_detail', compact('item','condition','categories','likes','comments'));
+    }
 }
