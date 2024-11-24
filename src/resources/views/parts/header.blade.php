@@ -29,7 +29,7 @@
             マイページ
         </div>
         <div class="header-nav__exhibition">
-            <button class="header-nav__exhibiton-button">
+            <button class="header-nav__exhibiton-button" type="button" onclick="location.href='{{ url('/sell') }}'">
                 出品
             </button>
         </div>
