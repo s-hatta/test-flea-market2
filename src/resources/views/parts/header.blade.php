@@ -26,7 +26,9 @@
         </div>
         @endif
         <div class="header-nav__mypage">
-            マイページ
+            <button class="header-nav__mypage-button" type="button" onclick="location.href='{{ url('/mypage') }}'">
+                マイページ
+            </button>
         </div>
         <div class="header-nav__exhibition">
             <button class="header-nav__exhibiton-button" type="button" onclick="location.href='{{ url('/sell') }}'">
