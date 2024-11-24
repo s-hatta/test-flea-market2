@@ -15,7 +15,9 @@
         <div class="rating">
             <span>☆</span> <span>{{count($likes)}}</span> <span>💬</span> <span>{{count($comments)}}</span>
         </div>
-        <button class="purchase-button">購入手続きへ</button>
+        <button class="purchase-button" type="button" onclick="location.href='{{ url('/purchase/'.$item->id) }}'">
+            購入手続きへ
+        </button>
         <div class="item-description">
             <h2>商品説明</h2>
             <p>{{$item->detail}}</p>
