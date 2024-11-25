@@ -12,9 +12,9 @@
     <div class="header-nav">
         @if (Auth::check())
         <div class="header-nav__logout">
-            <form class="header-nav__logout-button" method="POST" action="{{ url('logout') }}">
+            <form method="POST" action="{{ url('logout') }}">
                 @csrf
-                <button type="submit">ログアウト</button>
+                <button class="header-nav__logout-button" type="submit">ログアウト</button>
             </form>
         </div>
         @else
