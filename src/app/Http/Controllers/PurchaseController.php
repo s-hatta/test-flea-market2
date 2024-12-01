@@ -17,6 +17,7 @@ class PurchaseController extends Controller
     
     public function edit(Request $request)
     {
-        return view('items/address_edit');
+        $user = Auth::user();
+        return view('items/address_edit', compact('user'));
     }
 }
