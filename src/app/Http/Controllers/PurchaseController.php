@@ -14,4 +14,9 @@ class PurchaseController extends Controller
         $item = Item::where('id',$request['id'])->first();
         return view('items/item_purchase', compact('user','item'));
     }
+    
+    public function edit(Request $request)
+    {
+        return view('items/address_edit');
+    }
 }
