@@ -41,6 +41,7 @@
                     <h2>商品へのコメント</h2>
                     <textarea name="comment" placeholder="コメントを入力する"></textarea>
                     <button class="submit-comment">コメントを送信する</button>
+                    {{$errors->first('comment')}}
                 </form>
             </div>
         </div>
