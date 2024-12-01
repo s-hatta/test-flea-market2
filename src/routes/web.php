@@ -17,9 +17,10 @@ Route::get('/', [ItemController::class, 'index']);
 Route::get('/item/{id}', [ItemController::class, 'show'])->name('items.show');
 Route::middleware('auth')->group(function () {
     Route::get('sell', [ItemController::class, 'sell']);
-	Route::post('/comments/{id}', [CommentController::class, 'store'])->name('comments.store');
-    Route::get('/purchase/{id}', [PurchaseController::class, 'index']);
-    Route::get('/purchase/address/{id}', [PurchaseController::class, 'edit']);
+    Route::post('/comments/{id}', [CommentController::class, 'store'])->name('comments.store');
+    Route::get('/purchase/{id}', [PurchaseController::class, 'index'])->name('purchase.index');
+    Route::get('/purchase/address/{id}', [PurchaseController::class, 'edit'])->name('purchase.edit');
+    Route::post('/purchase/address/update', [PurchaseController::class, 'update'])->name('purchase.update');
     Route::get('/mypage', [UserController::class, 'index']);
     Route::get('/mypage/profile', [UserController::class, 'edit']);
 });
