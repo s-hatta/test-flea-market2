@@ -34,9 +34,12 @@
                 <p class="comment-text">こちらにコメントが入ります。</p>
             </div>
             <div class="add-comment">
-                <h2>商品へのコメント</h2>
-                <textarea placeholder="コメントを入力する"></textarea>
-                <button class="submit-comment">コメントを送信する</button>
+                <form method="POST" action="{{ route('comments.store', $item->id) }}">
+                    @csrf
+                    <h2>商品へのコメント</h2>
+                    <textarea name="comment" placeholder="コメントを入力する"></textarea>
+                    <button class="submit-comment">コメントを送信する</button>
+                </form>
             </div>
         </div>
     </div>
