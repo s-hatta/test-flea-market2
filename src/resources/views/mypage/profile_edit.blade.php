@@ -7,7 +7,8 @@
 @section('content')
     <div class="wrapper">
         <h1>プロフィール設定</h1>
-        <form class="form">
+        <form class="form" method="POST" action="{{ route('profile.update') }}">
+            @csrf
             {{--ユーザー名--}}
             <div class="form__item">
                 <div class="form__item-label">ユーザー名</div>
