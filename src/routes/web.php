@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::get('sell', [ItemController::class, 'sell']);
 	Route::post('/comments/{id}', [CommentController::class, 'store'])->name('comments.store');
     Route::get('/purchase/{id}', [PurchaseController::class, 'index']);
+    Route::get('/purchase/address/{id}', [PurchaseController::class, 'edit']);
     Route::get('/mypage', [UserController::class, 'index']);
     Route::get('/mypage/profile', [UserController::class, 'edit']);
 });
