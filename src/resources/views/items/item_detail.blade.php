@@ -30,8 +30,10 @@
         <div class="comments-section">
             <h2>コメント ({{count($comments)}})</h2>
             <div class="comment">
-                <p class="comment-author">admin</p>
-                <p class="comment-text">こちらにコメントが入ります。</p>
+                @foreach($item->comments as $comment)
+                    <p class="comment-author">{{ $comment->user->name }}</p>
+                    <p class="comment-text">{{ $comment->comment }}</p>
+                @endforeach
             </div>
             <div class="add-comment">
                 <form method="POST" action="{{ route('comments.store', $item->id) }}">
