@@ -30,13 +30,19 @@
         <div class="comments-section">
             <h2>コメント ({{count($comments)}})</h2>
             <div class="comment">
-                <p class="comment-author">admin</p>
-                <p class="comment-text">こちらにコメントが入ります。</p>
+                @foreach($item->comments as $comment)
+                    <p class="comment-author">{{ $comment->user->name }}</p>
+                    <p class="comment-text">{{ $comment->comment }}</p>
+                @endforeach
             </div>
             <div class="add-comment">
-                <h2>商品へのコメント</h2>
-                <textarea placeholder="コメントを入力する"></textarea>
-                <button class="submit-comment">コメントを送信する</button>
+                <form method="POST" action="{{ route('comments.store', $item->id) }}">
+                    @csrf
+                    <h2>商品へのコメント</h2>
+                    <textarea name="comment" placeholder="コメントを入力する"></textarea>
+                    <button class="submit-comment">コメントを送信する</button>
+                    {{$errors->first('comment')}}
+                </form>
             </div>
         </div>
     </div>
