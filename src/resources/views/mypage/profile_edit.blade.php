@@ -10,7 +10,7 @@
         <form class="form">
             {{--ユーザー名--}}
             <div class="form__item">
-                <div class="form__item-label">ユーザー名 </div>
+                <div class="form__item-label">ユーザー名</div>
                 <input class="form__item-input" type="text" name="name">
             </div>
             {{--郵便番号--}}
