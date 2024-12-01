@@ -1,1 +1,73 @@
 @extends('/layouts.common')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+@endsection
+
+@section('content')
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-image">
+            <img src="{{ Storage::url('public/images/users/' . Auth::user()->profile_image) }}" alt="{{ Auth::user()->name }}">
+        </div>
+        <h2 class="profile-name">{{ Auth::user()->name }}</h2>
+        <a href="{{ url('/mypage/profile') }}" class="edit-profile-button">プロフィールを編集</a>
+    </div>
+    <div class="profile-tabs">
+        <button class="tab-button active" data-tab="exhibitions">出品した商品</button>
+        <button class="tab-button" data-tab="purchases">購入した商品</button>
+    </div>
+    <div id="exhibitions" class="tab-content active">
+        <div class="item-container">
+            @foreach($exhibitedItems as $item)
+                <div class="item-card @if($item->stock == 0) sold-out @endif">
+                    <a href="{{ url('/item/' . $item->id) }}">
+                        <div class="item-image-wrapper">
+                            <img src="{{ Storage::url('public/images/items/' . $item->img_url) }}" alt="商品画像" class="item-image">
+                            @if($item->stock == 0)
+                                <div class="sold-text">Sold</div>
+                            @endif
+                        </div>
+                    </a>
+                    <p class="item-name">{{ $item->name }}</p>
+                </div>
+            @endforeach
+        </div>
+    </div>
+    <div id="purchases" class="tab-content">
+        <div class="item-container">
+            @foreach($purchasedItems as $item)
+                <div class="item-card @if($item->stock == 0) sold-out @endif">
+                    <a href="{{ url('/item/' . $item->id) }}">
+                        <div class="item-image-wrapper">
+                            <img src="{{ Storage::url('public/images/items/' . $item->img_url) }}" alt="商品画像" class="item-image">
+                            @if($item->stock == 0)
+                                <div class="sold-text">Sold</div>
+                            @endif
+                        </div>
+                    </a>
+                    <p class="item-name">{{ $item->name }}</p>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+@endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabs = document.querySelectorAll('.tab-button');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const target = document.getElementById(this.dataset.tab);
+
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+
+                this.classList.add('active');
+                target.classList.add('active');
+            });
+        });
+    });
+</script>
