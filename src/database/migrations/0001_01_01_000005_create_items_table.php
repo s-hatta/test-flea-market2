@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('stock');
             $table->string('detail');
             $table->text('img_url');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

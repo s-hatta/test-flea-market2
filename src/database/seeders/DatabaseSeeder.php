@@ -13,14 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(CategoriesTableSeeder::class);
-        $this->call(ConditionsTableSeeder::class);
-        $this->call(ItemsTableSeeder::class);
         User::factory(10)->create();
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => 'password',
         ]);
+        $this->call(CategoriesTableSeeder::class);
+        $this->call(ConditionsTableSeeder::class);
+        $this->call(ItemsTableSeeder::class);
     }
 }
