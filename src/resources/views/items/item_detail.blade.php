@@ -10,7 +10,7 @@
     </div>
     <div class="item-info">
         <h1>{{$item->name}}</h1>
-        <p class="brand-name">ブランド名</p>
+        <p class="brand-name">{{$item->brand_name}}</p>
         <p class="price">¥{{ number_format($item->price) }} (税込)</p>
         <div class="rating">
             <span>☆</span> <span>{{count($likes)}}</span> <span>💬</span> <span>{{count($comments)}}</span>
