@@ -9,9 +9,9 @@
         <h1>ログイン</h1>
         <form class="form" method="POST" action="{{url('login')}}">
             @csrf
-            {{-- ユーザー名もしくはメールアドレス --}}
+            {{-- メールアドレス --}}
             <div class="form__item">
-                <div class="form__item-label">ユーザー名 / メールアドレス</div>
+                <div class="form__item-label">メールアドレス</div>
                 <input class="form__item-input" type="text" name="email">
                 <div class="form__item-alert">{{$errors->first('email')}}</div>
             </div>
