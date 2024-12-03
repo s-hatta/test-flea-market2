@@ -10,7 +10,7 @@
     </div>
     <div class="item-info">
         <h1>{{$item->name}}</h1>
-        <p class="brand-name">ブランド名</p>
+        <p class="brand-name">{{$item->brand_name}}</p>
         <p class="price">¥{{ number_format($item->price) }} (税込)</p>
         <div class="rating">
             <span>☆</span> <span>{{count($likes)}}</span> <span>💬</span> <span>{{count($comments)}}</span>
@@ -24,7 +24,11 @@
         </div>
         <div class="item-details">
             <h2>商品の情報</h2>
-            <p>カテゴリー: <span class="category">洋服</span> <span class="subcategory">メンズ</span></p>
+            <p>カテゴリー: 
+            @foreach($item->categories as $category)
+                <span class="category">{{$category->content}}</span>
+            @endforeach
+            </p>
             <p>商品の状態: <span class="condition">{{$condition->condition}}</span></p>
         </div>
         <div class="comments-section">
