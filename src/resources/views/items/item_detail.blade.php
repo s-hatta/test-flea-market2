@@ -13,7 +13,16 @@
         <p class="brand-name">{{$item->brand_name}}</p>
         <p class="price">¥{{ number_format($item->price) }} (税込)</p>
         <div class="rating">
-            <span>☆</span> <span>{{count($likes)}}</span> <span>💬</span> <span>{{count($comments)}}</span>
+            <table>
+                <tr>
+                    <th><img src="{{ asset('images/icons/icon_like.png') }}" alt="いいね"></th>
+                    <th><img src="{{ asset('images/icons/icon_comment.png') }}" alt="コメント"></th>
+                </tr>
+                <tr>
+                    <td>{{count($likes)}}</td>
+                    <td>{{count($comments)}}</td>
+                </tr>
+            </table>
         </div>
         <button class="purchase-button" type="button" onclick="location.href='{{ url('/purchase/'.$item->id) }}'">
             購入手続きへ
