@@ -10,16 +10,26 @@ use App\Models\Condition;
 
 class ItemController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $isMylist = $request->query('tab') === 'mylist';
+        
         if (Auth::check())
         {
-            $user = Auth::user();
-            $items = Item::where('user_id', '!=', $user->id)->get();
+            $itemQuery = Item::query();
+            $itemQuery = $itemQuery->where('user_id', '!=', Auth::id());
+            if( $isMylist )
+            {
+                /* いいねした商品 */
+                $itemQuery = $itemQuery->whereHas('likes', function ($q) {
+                    $q->where('likes.user_id', '=', Auth::id());
+                })->orderBy('id','asc');
+            }
+            $items = $itemQuery->get();
         }
         else
         {
-            $items = Item::all();
+            $items = ($isMylist)? null:Item::all();
         }
         return view('items/items', compact('items'));
     }
