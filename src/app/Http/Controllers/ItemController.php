@@ -25,11 +25,22 @@ class ItemController extends Controller
                     $q->where('likes.user_id', '=', Auth::id());
                 })->orderBy('id','asc');
             }
+            if( isset($request['item_name']) )
+                {
+                    $itemQuery = $itemQuery->where('name', 'LIKE', '%'.$request['item_name'].'%');  
+                }
             $items = $itemQuery->get();
         }
         else
         {
-            $items = ($isMylist)? null:Item::all();
+            if( isset($request['item_name']) )
+                {
+                    $items = ($isMylist)? null:Item::where('name', 'LIKE', '%'.$request['item_name'].'%')->get();
+                }
+            else
+                {
+                    $items = ($isMylist)? null:Item::all();
+                }
         }
         return view('items/items', compact('items'));
     }

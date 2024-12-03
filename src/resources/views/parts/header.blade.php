@@ -7,7 +7,10 @@
     
     @if (!request()->is('login') && !request()->is('register'))
     <div class="header-search">
-        <input class="header-search__input" type="text" placeholder="なにをお探しですか？">
+        <form method="POST" action="{{ url('/') }}">
+            @csrf
+            <input class="header-search__input" type="text" name="item_name" placeholder="なにをお探しですか？">
+        </form>
     </div>
     <div class="header-nav">
         @if (Auth::check())

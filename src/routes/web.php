@@ -14,6 +14,7 @@ Route::get('login',[LoginController::class,'create'])->name('login');
 Route::post('login',[LoginController::class,'store']);
 Route::post('logout',[LoginController::class,'destroy']);
 Route::get('/', [ItemController::class, 'index']);
+Route::post('/', [ItemController::class, 'index']);
 Route::get('/item/{id}', [ItemController::class, 'show'])->name('items.show');
 Route::middleware('auth')->group(function () {
     Route::get('sell', [ItemController::class, 'sell']);
