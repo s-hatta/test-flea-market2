@@ -4,6 +4,14 @@
 @endsection
 
 @section('content')
+<div class="tab-container">
+    <button class="tab-button" type="button" onclick="location.href='{{ url('/') }}'">
+        おすすめ
+    </button>
+    <button class="tab-button" type="button" onclick="location.href='{{ url('/?tab=mylist') }}'">
+        マイリスト
+    </button>
+</div>
 <div class="item-container">
     @foreach($items as $item)
         <div class="item-card @if($item->stock == 0) sold-out @endif">
