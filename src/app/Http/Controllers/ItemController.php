@@ -13,24 +13,7 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         $isMylist = $request->query('tab') === 'mylist';
-        
-        if (Auth::check())
-        {
-            $itemQuery = Item::query();
-            $itemQuery = $itemQuery->where('user_id', '!=', Auth::id());
-            if( $isMylist )
-            {
-                /* いいねした商品 */
-                $itemQuery = $itemQuery->whereHas('likes', function ($q) {
-                    $q->where('likes.user_id', '=', Auth::id());
-                })->orderBy('id','asc');
-            }
-            $items = $itemQuery->get();
-        }
-        else
-        {
-            $items = ($isMylist)? null:Item::all();
-        }
+        $items = $this->findItems( $isMylist, $request['item_name'] );
         return view('items/items', compact('items'));
     }
     
@@ -49,5 +32,31 @@ class ItemController extends Controller
         $likes = $item->likes;
         $comments = $item->comments;
         return view('items/item_detail', compact('item','condition','categories','likes','comments'));
+    }
+    
+    private function findItems($isMylist, $itemName)
+    {
+        if (Auth::check())
+        {
+            $itemQuery = Item::query();
+            $itemQuery = $itemQuery->where('user_id', '!=', Auth::id());
+            if( $isMylist )
+            {
+                /* いいねした商品 */
+                return $itemQuery->whereHas('likes', function ($q) {
+                    $q->where('likes.user_id', '=', Auth::id());
+                })->orderBy('id','asc')->get();
+            }
+            
+            if( isset($itemName) )
+            {
+                $itemQuery = $itemQuery->where('name', 'LIKE', '%'.$itemName.'%');  
+            }
+            return $itemQuery->get();
+        }
+        else
+        {
+            return ($isMylist)? null:Item::all();
+        }
     }
 }
