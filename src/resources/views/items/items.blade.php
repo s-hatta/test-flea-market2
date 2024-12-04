@@ -12,5 +12,5 @@
         マイリスト
     </button>
 </div>
-@include('parts.items', $items)
+@include('parts.items', ['items' => $items])
 @endsection
