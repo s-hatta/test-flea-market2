@@ -18,6 +18,7 @@ Route::post('/', [ItemController::class, 'index']);
 Route::get('/item/{id}', [ItemController::class, 'show'])->name('items.show');
 Route::middleware('auth')->group(function () {
     Route::get('sell', [ItemController::class, 'sell']);
+    Route::post('sell', [ItemController::class, 'update'])->name('item.update');
 	Route::post('/comments/{id}', [CommentController::class, 'store'])->name('comments.store');
     Route::get('/purchase/{id}', [PurchaseController::class, 'index']);
     Route::get('/purchase/address/{id}', [PurchaseController::class, 'edit']);
