@@ -7,8 +7,13 @@
 @section('content')
     <div class="wrapper">
         <h1>プロフィール設定</h1>
-        <form class="form" method="POST" action="{{ route('profile.update') }}">
+        <form class="form" method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
             @csrf
+            {{--プロフィール画像--}}
+            <div class="form__item">
+                <div class="form__item-label">プロフィール画像</div>
+                <input class="form__item-input" type="file" name="profile_image">
+            </div>
             {{--ユーザー名--}}
             <div class="form__item">
                 <div class="form__item-label">ユーザー名</div>
