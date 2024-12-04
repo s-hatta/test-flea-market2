@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('postal_code', 8)->nullable();
             $table->string('address')->nullable();
             $table->string('building')->nullable();
+            $table->text('img_url')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
