@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Condition;
@@ -22,6 +23,30 @@ class ItemController extends Controller
         $categories = Category::all();
         $conditions = Condition::all();
         return view('items/item_exhibit', compact('categories','conditions'));
+    }
+    
+    public function update(Request $request)
+    {
+        $item = new Item();
+        $item->name = $request['name'];
+        $item->brand_name = $request['brand_name'];
+        $item->detail = $request['detail'];
+        $item->price = $request['price'];
+        $item->stock = 1;
+        $item->user_id = Auth::id();
+        $item->condition_id = $request['condition_id'];
+        if ($request->hasFile('item_image'))
+        {
+            $file = $request->file('item_image');
+            $path = Storage::disk('public')->putFile('images/items', $file);
+            $item->img_url = basename($path);
+        }
+        $item->save();
+        foreach( $request['categories'] as $category )
+        {
+            $item->categories()->attach($category);
+        }
+        return redirect('/');
     }
     
     public function show(Request $request)
