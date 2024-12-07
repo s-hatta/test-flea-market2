@@ -13,7 +13,7 @@ class PurchaseController extends Controller
     {
         $user = Auth::user();
         $item = Item::where('id', $request['id'])->first();
-        $address = $this->findAddress();
+        $address = $this->findAddress( $user, $item );
         return view('items/item_purchase', compact('user','item','address'));
     }
 
@@ -22,7 +22,7 @@ class PurchaseController extends Controller
         return view('items.address_edit');
     }
     
-    private function findAddress()
+    private function findAddress( $user, $item )
     {
         $userItem = $item->users()->where('user_id', $user->id)->first();
         if ($userItem && $userItem->pivot->address_id)
@@ -33,8 +33,8 @@ class PurchaseController extends Controller
         if( is_null($user->address_id) )
             {
             return null;
-            }
-                
+        }
+        
         $existingAddress = $user->address;
         $address = Address::create([
             'postal_code' => $existingAddress->postal_code,
