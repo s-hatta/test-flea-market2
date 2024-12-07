@@ -41,7 +41,10 @@
                 <td id="selected-payment">選択してください</td>
             </tr>
         </table>
-        <button type="submit" class="purchase-button">購入する</button>
+        <form method="POST" action="{{ url('/purchase/'.$item->id) }}">
+            @csrf
+            <button type="submit" class="purchase-button">購入する</button>
+        </form>
     </div>
 </div>
 

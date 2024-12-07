@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::post('sell', [ItemController::class, 'update'])->name('item.update');
 	Route::post('/comments/{id}', [CommentController::class, 'store'])->name('comments.store');
     Route::get('/purchase/{id}', [PurchaseController::class, 'index']);
+    Route::post('/purchase/{id}', [PurchaseController::class, 'execute']);
     Route::get('/purchase/address/{id}', [PurchaseController::class, 'edit']);
     Route::get('/mypage', [UserController::class, 'index']);
     Route::get('/mypage/profile', [UserController::class, 'edit']);
