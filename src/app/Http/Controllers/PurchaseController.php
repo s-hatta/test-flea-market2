@@ -22,7 +22,7 @@ class PurchaseController extends Controller
         $user = Auth::user();
         $item = Item::where('id',$request['id'])->first();
         $address = $this->findAddress( $user, $item );
-        return view('items.address_edit', compact('address'));
+        return view('items.address_edit', compact('item','address'));
     }
     
     public function update(Request $request)
