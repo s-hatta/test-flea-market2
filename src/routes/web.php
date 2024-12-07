@@ -17,6 +17,7 @@ Route::get('/', [ItemController::class, 'index']);
 Route::post('/', [ItemController::class, 'index']);
 Route::get('/item/{id}', [ItemController::class, 'show'])->name('items.show');
 Route::middleware('auth')->group(function () {
+    Route::post('/item/{id}/toggle-like', [ItemController::class, 'toggleLike'])->name('item.toggleLike');
     Route::get('sell', [ItemController::class, 'sell']);
     Route::post('sell', [ItemController::class, 'update'])->name('item.update');
 	Route::post('/comments/{id}', [CommentController::class, 'store'])->name('comments.store');
