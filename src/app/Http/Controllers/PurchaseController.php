@@ -19,15 +19,30 @@ class PurchaseController extends Controller
 
     public function edit(Request $request)
     {
-        return view('items.address_edit');
+        $user = Auth::user();
+        $item = Item::where('id',$request['id'])->first();
+        $address = $this->findAddress( $user, $item );
+        return view('items.address_edit', compact('item','address'));
+    }
+    
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+        $item = Item::where('id', $request['id'])->first();
+        $address = $this->findAddress( $user, $item );
+        $address->postal_code = $request->postal_code;
+        $address->address = $request->address;
+        $address->building = $request->building;
+        $address->update();
+        return view('items/item_purchase', compact('user','item','address'));
     }
     
     private function findAddress( $user, $item )
     {
         $userItem = $item->users()->where('user_id', $user->id)->first();
-        if ($userItem && $userItem->pivot->address_id)
+        if ($userItem && $userItem->address_id)
         {
-            return Address::find($userItem->pivot->address_id);
+            return Address::find($userItem->address_id);
         }
         
         $existingAddress = $user->address;
