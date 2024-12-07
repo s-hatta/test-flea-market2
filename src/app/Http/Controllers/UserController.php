@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Item;
 use App\Models\Address;
+use App\Models\Order;
 
 class UserController extends Controller
 {
@@ -15,9 +16,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $exhibitedItems = Item::where('owner_id', '=', Auth::id())->get();
-        $purchasedItems = User::whereHas('orders', function($query) use ($user) {
-            $query->where('user_id', $user->id);
-        })->get();
+        $purchasedItems = Order::where('user_id', Auth::id())->with('item')->get()->pluck('item');
         return view('mypage/profile', compact('user', 'exhibitedItems', 'purchasedItems'));
     }
     
