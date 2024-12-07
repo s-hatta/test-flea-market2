@@ -30,11 +30,6 @@ class PurchaseController extends Controller
             return Address::find($userItem->pivot->address_id);
         }
         
-        if( is_null($user->address_id) )
-            {
-            return null;
-        }
-        
         $existingAddress = $user->address;
         $address = Address::create([
             'postal_code' => $existingAddress->postal_code,
