@@ -22,17 +22,17 @@
             {{--郵便番号--}}
             <div class="form__item">
                 <div class="form__item-label">郵便番号</div>
-                <input class="form__item-input" type="text" name="postal_code" value="{{ $user->postal_code }}">
+                <input class="form__item-input" type="text" name="postal_code" value="{{ $user->address->postal_code }}">
             </div>
             {{--住所--}}
             <div class="form__item">
                 <div class="form__item-label">住所</div>
-                <input class="form__item-input" type="text" name="address" value="{{ $user->address }}">
+                <input class="form__item-input" type="text" name="address" value="{{ $user->address->address }}">
             </div>
             {{--建物名--}}
             <div class="form__item">
                 <div class="form__item-label">建物名</div>
-                <input class="form__item-input" type="text" name="building" value="{{ $user->building }}">
+                <input class="form__item-input" type="text" name="building" value="{{ $user->address->building }}">
             </div>
             {{--登録実行--}}
             <button class="form__submit" type="submit">更新する</button>

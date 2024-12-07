@@ -25,8 +25,8 @@
         </div>
         <div class="shipping-address">
             <h3>配送先</h3>
-            <p>〒{{ $user->postal_code }}</p>
-            <p>{{ $user->address }} {{ $user->building }}</p>
+            <p>〒{{ $address->postal_code }}</p>
+            <p>{{ $address->address }} {{ $address->building }}</p>
             <a href="{{ url('/purchase/address/' . $item->id) }}" class="change-address">変更する</a>
         </div>
     </div>

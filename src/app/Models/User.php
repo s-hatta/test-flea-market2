@@ -18,12 +18,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'address_id',
         'name',
         'email',
         'password',
-        'postal_code',
-        'address',
-        'building',
         'img_url',
     ];
 
@@ -50,18 +48,23 @@ class User extends Authenticatable
         ];
     }
     
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
+    }
+    
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
     
-    public function likes()
-    {
-        return $this->hasMany(Like::class);
-    }
-    
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+    
+    public function items()
+    {
+        return $this->belongsToMany(Item::class, 'users_items');
     }
 }

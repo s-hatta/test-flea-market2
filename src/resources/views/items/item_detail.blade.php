@@ -19,7 +19,7 @@
                     <th><img src="{{ asset('images/icons/icon_comment.png') }}" alt="コメント"></th>
                 </tr>
                 <tr>
-                    <td>{{count($likes)}}</td>
+                    <td>{{$likeNum}}</td>
                     <td>{{count($comments)}}</td>
                 </tr>
             </table>
