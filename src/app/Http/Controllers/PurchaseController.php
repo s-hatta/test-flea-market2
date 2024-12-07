@@ -28,9 +28,9 @@ class PurchaseController extends Controller
     private function findAddress( $user, $item )
     {
         $userItem = $item->users()->where('user_id', $user->id)->first();
-        if ($userItem && $userItem->pivot->address_id)
+        if ($userItem && $userItem->address_id)
         {
-            return Address::find($userItem->pivot->address_id);
+            return Address::find($userItem->address_id);
         }
         
         $existingAddress = $user->address;
