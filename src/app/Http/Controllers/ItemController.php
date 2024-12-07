@@ -60,6 +60,23 @@ class ItemController extends Controller
         return view('items/item_detail', compact('item','condition','categories','likeNum','comments'));
     }
     
+    public function toggleLike(Request $request, $itemId)
+    {
+        $user = Auth::user();
+        $item = Item::findOrFail($itemId);
+        $userItem = $item->users()->where('user_id', $user->id)->first();
+        
+        if( $userItem ) {
+            $isLike = $userItem->pivot->is_like;
+            $item->users()->updateExistingPivot($user->id, ['is_like' => !$isLike]);
+        } else {
+            $item->users()->attach($user->id, ['is_like' => true]);
+        }
+        $likeNum = $item->users()->wherePivot('is_like', true)->count();
+
+        return response()->json(['likeNum' => $likeNum]);
+    }
+    
     private function findItems($isMylist, $itemName)
     {
         if (Auth::check())
