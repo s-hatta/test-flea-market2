@@ -24,6 +24,17 @@ class UserController extends Controller
     public function edit()
     {
         $user = Auth::user();
+        
+         /* ユーザーに住所情報がない場合は追加する */
+        if( is_null($user->address_id) ) {
+            $address = Address::create([
+                'postal_code' => '',
+                'address' => '',
+                'building' => '',
+            ]);
+            $user->address_id = $address->id;
+            $user->save();
+            }
         return view('mypage/profile_edit', compact('user'));
     }
     
