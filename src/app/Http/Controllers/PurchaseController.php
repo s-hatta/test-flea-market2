@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use App\Models\Address;
 use App\Models\User;
+use App\Models\Order;
 
 class PurchaseController extends Controller
 {
@@ -15,6 +16,31 @@ class PurchaseController extends Controller
         $item = Item::where('id', $request['id'])->first();
         $address = $this->findAddress( $user, $item );
         return view('items/item_purchase', compact('user','item','address'));
+    }
+    
+    public function execute(Request $request)
+    {
+        $user = Auth::user();
+        $item = Item::where('id', $request['id'])->first();
+        
+        /* 商品の在庫を0にする */
+        $item->stock = 0;
+        $item->save();
+        
+        /* 商品に紐づいている住所を複製して登録 */
+        $userItem = $item->users()->where('user_id', $user->id)->first();
+        $address = Address::find($userItem->address_id)->replicate();
+        $address->save();
+        
+        /* 注文情報登録 */
+        $order = new Order();
+        $order->user_id = $user->id;
+        $order->item_id = $item->id;
+        $order->price = $item->price;
+        $order->address_id = $address->id;  /* 複製した住所の方を割り当てる */
+        $order->save();
+        
+        return redirect('/');
     }
 
     public function edit(Request $request)

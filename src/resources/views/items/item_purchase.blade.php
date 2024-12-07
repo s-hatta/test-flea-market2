@@ -17,9 +17,9 @@
         </div>
         <div class="payment-method">
             <label for="payment">支払い方法</label>
-            <select id="payment" name="payment">
+            <select id="payment" name="payment" onchange="displayPaymentMethod()">
                 <option value="">選択してください</option>
-                <option value="konbini">コンビニ払い</option>
+                <option value="cvs">コンビニ払い</option>
                 <option value="card">カード払い</option>
             </select>
         </div>
@@ -38,9 +38,27 @@
             </tr>
             <tr>
                 <th>支払い方法</th>
-                <td>コンビニ払い</td>
+                <td id="selected-payment">選択してください</td>
+            </tr>
         </table>
-        <button type="submit" class="purchase-button">購入する</button>
+        <form method="POST" action="{{ url('/purchase/'.$item->id) }}">
+            @csrf
+            <button type="submit" class="purchase-button">購入する</button>
+        </form>
     </div>
 </div>
+
+<script>
+    function displayPaymentMethod() {
+        var paymentMethod = document.getElementById('payment').value;
+        var selectedPayment = document.getElementById('selected-payment');
+        if( paymentMethod === 'cvs') {
+            selectedPayment.innerText = 'コンビニ払い';
+        } else if (paymentMethod === 'card') {
+            selectedPayment.innerText = 'カード払い';
+        } else {
+            selectedPayment.innerText = '選択してください';
+        }
+    }
+</script>
 @endsection
