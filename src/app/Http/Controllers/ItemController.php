@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Condition;
@@ -33,7 +34,7 @@ class ItemController extends Controller
         $item->detail = $request['detail'];
         $item->price = $request['price'];
         $item->stock = 1;
-        $item->user_id = Auth::id();
+        $item->owner_id = Auth::id();
         $item->condition_id = $request['condition_id'];
         if ($request->hasFile('item_image'))
         {
@@ -54,9 +55,9 @@ class ItemController extends Controller
         $item = Item::where('id',$request['id'])->first();
         $condition = $item->condition;
         $categories = $item->categories;
-        $likes = $item->likes;
+        $likeNum = $item->users()->wherePivot('is_like', true)->count();
         $comments = $item->comments;
-        return view('items/item_detail', compact('item','condition','categories','likes','comments'));
+        return view('items/item_detail', compact('item','condition','categories','likeNum','comments'));
     }
     
     private function findItems($isMylist, $itemName)
@@ -64,13 +65,13 @@ class ItemController extends Controller
         if (Auth::check())
         {
             $itemQuery = Item::query();
-            $itemQuery = $itemQuery->where('user_id', '!=', Auth::id());
+            $itemQuery = $itemQuery->where('owner_id', '!=', Auth::id());
             if( $isMylist )
             {
                 /* いいねした商品 */
-                return $itemQuery->whereHas('likes', function ($q) {
-                    $q->where('likes.user_id', '=', Auth::id());
-                })->orderBy('id','asc')->get();
+                return $itemQuery->whereHas('users', function ($q) {
+                    $q->where('user_id', Auth::id())->where('is_like', true);
+                })->orderBy('id', 'asc')->get();
             }
             
             if( isset($itemName) )

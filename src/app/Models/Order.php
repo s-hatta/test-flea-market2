@@ -9,10 +9,8 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'item_id',
+        'address_id',
         'price',
-        'postal_code',
-        'address',
-        'building',
     ];
     
     public function item()
@@ -23,5 +21,10 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     protected $fillable = [
+        'owner_id',
         'name',
         'brand_name',
         'condition_id',
@@ -14,7 +15,6 @@ class Item extends Model
         'stock',
         'detail',
         'img_url',
-        'user_id',
     ];
     
     public function categories()
@@ -32,18 +32,13 @@ class Item extends Model
         return $this->hasOne(Orders::class);
     }
     
-    public function likes()
-    {
-        return $this->hasMany(Like::class);
-    }
-    
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
     
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class, 'users_items')->withPivot('is_like');
     }
 }
