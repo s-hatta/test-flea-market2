@@ -39,6 +39,7 @@
             <tr>
                 <th>支払い方法</th>
                 <td>コンビニ払い</td>
+            </tr>
         </table>
         <button type="submit" class="purchase-button">購入する</button>
     </div>
