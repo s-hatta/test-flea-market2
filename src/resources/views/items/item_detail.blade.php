@@ -5,13 +5,19 @@
 
 @section('content')
 <div class="wrapper">
+    {{-- 商品イメージ --}}
     <div class="item-image">
         <img src="{{ asset('storage/images/items/'.$item->img_url) }}" alt="商品画像">
     </div>
+    {{-- 商品情報 --}}
     <div class="item-info">
+        {{-- 商品名 --}}
         <h1>{{$item->name}}</h1>
+        {{-- ブランド名 --}}
         <p class="brand-name">{{$item->brand_name}}</p>
+        {{-- 価格 --}}
         <p class="price">¥{{ number_format($item->price) }} (税込)</p>
+        {{-- いいね数とコメント数 --}}
         <div class="rating">
             <table>
                 <tr>
@@ -24,13 +30,16 @@
                 </tr>
             </table>
         </div>
+        {{-- 購入ボタン --}}
         <button class="purchase-button" type="button" onclick="location.href='{{ url('/purchase/'.$item->id) }}'">
             購入手続きへ
         </button>
+        {{-- 商品説明 --}}
         <div class="item-description">
             <h2>商品説明</h2>
             <p>{{$item->detail}}</p>
         </div>
+        {{-- 商品詳細 --}}
         <div class="item-details">
             <h2>商品の情報</h2>
             <p>カテゴリー: 
@@ -40,14 +49,17 @@
             </p>
             <p>商品の状態: <span class="condition">{{$condition->condition}}</span></p>
         </div>
+        {{-- コメント --}}
         <div class="comments-section">
             <h2>コメント ({{count($comments)}})</h2>
+            {{-- コメント一覧 --}}
             <div class="comment">
                 @foreach($item->comments as $comment)
                     <p class="comment-author">{{ $comment->user->name }}</p>
                     <p class="comment-text">{{ $comment->comment }}</p>
                 @endforeach
             </div>
+            {{-- コメント入力 --}}
             <div class="add-comment">
                 <form method="POST" action="{{ route('comments.store', $item->id) }}">
                     @csrf
@@ -62,6 +74,7 @@
 </div>
 @endsection
 
+{{-- 押下するごとにいいねの登録／解除をおこなう --}}
 <script>
     function toggleLike(itemId) {
         fetch(`/item/${itemId}/toggle-like`, {
