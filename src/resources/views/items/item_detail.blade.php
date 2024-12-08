@@ -42,12 +42,22 @@
         {{-- 商品詳細 --}}
         <div class="item-details">
             <h2>商品の情報</h2>
-            <p>カテゴリー: 
-            @foreach($item->categories as $category)
-                <span class="category">{{$category->content}}</span>
-            @endforeach
-            </p>
-            <p>商品の状態: <span class="condition">{{$condition->condition}}</span></p>
+            <table>
+                <tr>
+                    <th>カテゴリ</th>
+                    <td>
+                        @foreach($item->categories as $category)
+                            <span class="category">{{$category->content}}</span>
+                        @endforeach
+                    </td>
+                </tr>
+                <tr>
+                    <th>商品の状態</th>
+                    <td>
+                        <span class="condition">{{$condition->condition}}</span></p>
+                    </td>
+                </tr>
+            </table>
         </div>
         {{-- コメント --}}
         <div class="comments-section">
