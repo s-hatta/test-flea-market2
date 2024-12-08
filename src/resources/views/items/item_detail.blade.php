@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-<div class="item-detail">
+<div class="wrapper">
     <div class="item-image">
         <img src="{{ asset('storage/images/items/'.$item->img_url) }}" alt="商品画像">
     </div>
