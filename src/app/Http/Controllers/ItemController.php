@@ -99,7 +99,16 @@ class ItemController extends Controller
         }
         else
         {
-            return ($isMylist)? null:Item::all();
+            if( $isMylist )
+            {
+                return null;
+            }
+            $itemQuery = Item::query();
+            if( isset($itemName) )
+            {
+                $itemQuery = $itemQuery->where('name', 'LIKE', '%'.$itemName.'%');  
+            }
+            return $itemQuery->get();
         }
     }
 }
