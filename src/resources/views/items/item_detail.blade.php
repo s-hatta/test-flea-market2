@@ -65,6 +65,7 @@
             {{-- コメント一覧 --}}
             <div class="comment">
                 @foreach($item->comments as $comment)
+                    <img class="comment-img" src="{{ asset('storage/images/users/'.$comment->user->img_url) }}" alt="ユーザー画像">
                     <p class="comment-author">{{ $comment->user->name }}</p>
                     <p class="comment-text">{{ $comment->comment }}</p>
                 @endforeach
