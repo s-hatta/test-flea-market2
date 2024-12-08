@@ -9,7 +9,7 @@
     <div class="header-search">
         <form method="POST" action="{{ url('/') }}">
             @csrf
-            <input class="header-search__input" type="text" name="item_name" placeholder="なにをお探しですか？">
+            <input class="header-search__input" type="text" name="item_name" value="{{isset($itemName)?$itemName:''}}" placeholder="なにをお探しですか？">
         </form>
     </div>
     <div class="header-nav">
