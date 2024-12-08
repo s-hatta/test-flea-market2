@@ -14,9 +14,18 @@ class ItemController extends Controller
 {
     public function index(Request $request)
     {
+        $find = $request->session()->get('find');
+        if($request->method() == "POST") {
+            $itemName = $request['item_name'];
+        } else {
+            $itemName = $find['item_name'];
+        }
         $isMylist = $request->query('tab') === 'mylist';
-        $items = $this->findItems( $isMylist, $request['item_name'] );
-        return view('items/items', compact('items'));
+        $items = $this->findItems( $isMylist, $itemName );
+        $request->session()->put('find',[
+            'item_name'=> $itemName,
+        ]);
+        return view('items/items', compact('items','itemName'));
     }
     
     public function sell()
