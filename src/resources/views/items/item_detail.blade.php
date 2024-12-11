@@ -63,15 +63,19 @@
         <div class="comments-section">
             <h2>コメント ({{count($comments)}})</h2>
             {{-- コメント一覧 --}}
-            <div class="comment">
+            <div class="comments-list">
                 @foreach($item->comments as $comment)
-                    @if($comment->user->img_url)
-                        <img class="comment-img" src="{{ asset('storage/images/users/'.$comment->user->img_url) }}" alt="ユーザー画像">
-                    @else
-                        <div class="comment-img"></div>
-                    @endif
-                    <p class="comment-author">{{ $comment->user->name }}</p>
-                    <p class="comment-text">{{ $comment->comment }}</p>
+                    <div class="comment">
+                        <div class="comment-header">
+                            @if($comment->user->img_url)
+                                <img class="comment-img" src="{{ asset('storage/images/users/'.$comment->user->img_url) }}" alt="ユーザー画像">
+                            @else
+                                <div class="comment-img"></div>
+                            @endif
+                            <p class="comment-author">{{ $comment->user->name }}</p>
+                        </div>
+                        <p class="comment-text">{{ $comment->comment }}</p>
+                    </div>
                 @endforeach
             </div>
             {{-- コメント入力 --}}
