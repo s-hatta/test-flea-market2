@@ -44,7 +44,7 @@
             <h2>商品の情報</h2>
             <table>
                 <tr>
-                    <th>カテゴリ</th>
+                    <th>カテゴリー</th>
                     <td>
                         @foreach($item->categories as $category)
                             <span class="category">{{$category->content}}</span>
