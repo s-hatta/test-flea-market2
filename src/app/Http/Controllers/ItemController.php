@@ -18,7 +18,7 @@ class ItemController extends Controller
         if($request->method() == "POST") {
             $itemName = $request['item_name'];
         } else {
-            $itemName = $find['item_name'];
+            $itemName = isset($find['item_name'])? $find['item_name']:null;
         }
         $isMylist = $request->query('tab') === 'mylist';
         $items = $this->findItems( $isMylist, $itemName );
