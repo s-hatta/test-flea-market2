@@ -54,7 +54,7 @@
                 <tr>
                     <th>商品の状態</th>
                     <td>
-                        <span class="condition">{{$condition->condition}}</span></p>
+                        <span class="condition">{{$condition->condition}}</span>
                     </td>
                 </tr>
             </table>
