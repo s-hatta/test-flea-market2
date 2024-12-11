@@ -65,7 +65,11 @@
             {{-- コメント一覧 --}}
             <div class="comment">
                 @foreach($item->comments as $comment)
-                    <img class="comment-img" src="{{ asset('storage/images/users/'.$comment->user->img_url) }}" alt="ユーザー画像">
+                    @if($comment->user->img_url)
+                        <img class="comment-img" src="{{ asset('storage/images/users/'.$comment->user->img_url) }}" alt="ユーザー画像">
+                    @else
+                        <div class="comment-img"></div>
+                    @endif
                     <p class="comment-author">{{ $comment->user->name }}</p>
                     <p class="comment-text">{{ $comment->comment }}</p>
                 @endforeach
