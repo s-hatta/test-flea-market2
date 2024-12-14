@@ -1,7 +1,7 @@
 <header class="header">
     <div class="header-logo">
         <a class="header-logo__inner" href="{{ url('/') }}">
-            <img src={{ Storage::url('logo.svg') }} alt="COACHTECH">
+            <img src={{ asset('logo.svg') }} alt="COACHTECH">
         </a>
     </div>
     
