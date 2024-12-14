@@ -8,7 +8,11 @@
 <div class="container">
     <div class="profile-header">
         <div class="profile-image">
-            <img src="{{ Storage::url('public/images/users/' . Auth::user()->img_url) }}" alt="{{ Auth::user()->name }}">
+            @if($user->img_url)
+                <img src="{{ asset('storage/images/users/'.Auth::user()->img_url) }}" alt="プロフィール画像">
+            @else
+                <div class="profile-image__placeholder"></div>
+            @endif
         </div>
         <h2 class="profile-name">{{ Auth::user()->name }}</h2>
         <a href="{{ url('/mypage/profile') }}" class="edit-profile-button">プロフィールを編集</a>

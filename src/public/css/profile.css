@@ -29,10 +29,12 @@
     border-radius: 50%;
     overflow: hidden;
 }
-.profile-image img {
+.profile-image img,
+.profile-image__placeholder {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    background: #d9d9d9;
 }
 
 /* ユーザー名 */
