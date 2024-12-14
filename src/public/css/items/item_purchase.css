@@ -6,6 +6,7 @@
 .container {
     max-width: 1500px;
     padding: 0 20px;
+    margin: auto;
     display: grid;
     grid-template-columns: 3fr 2fr;
     gap: 40px;
