@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-<div class="purchase-container">
+<div class="container">
     <div class="purchase-details">
         <div class="item-info-container">
             <div class="item-image">
@@ -12,11 +12,11 @@
             </div>
             <div class="item-info">
                 <h2>{{ $item->name }}</h2>
-                <p class="price">¥{{ number_format($item->price) }}</p>
+                <p>¥ <span class="price">{{ number_format($item->price) }}</span></p>
             </div>
         </div>
         <div class="payment-method">
-            <label for="payment">支払い方法</label>
+            <h3>支払い方法</h3>
             <select id="payment" name="payment" onchange="displayPaymentMethod()">
                 <option value="">選択してください</option>
                 <option value="cvs">コンビニ払い</option>
