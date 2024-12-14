@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="profile-container">
+<div class="container">
     <div class="profile-header">
         <div class="profile-image">
             <img src="{{ Storage::url('public/images/users/' . Auth::user()->img_url) }}" alt="{{ Auth::user()->name }}">
