@@ -1,0 +1,17 @@
+.tab-container {
+    border-bottom: 1px solid #5f5f5f;
+    padding-left: 50px;
+    margin-bottom: 50px;
+}
+
+.tab-button {
+    border: none;
+    background-color: transparent;
+    font-size: 24px;
+    font-weight: bold;
+    padding-left: 50px;
+}
+
+.tab-button.active {
+    color: #ff0000;
+}

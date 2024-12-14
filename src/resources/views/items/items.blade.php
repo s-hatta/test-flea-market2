@@ -6,10 +6,10 @@
 
 @section('content')
 <div class="tab-container">
-    <button class="tab-button" type="button" onclick="location.href='{{ url('/') }}'">
+    <button class="tab-button {{ request()->query('tab') !== 'mylist' ? 'active' : '' }}" type="button" onclick="location.href='{{ url('/') }}'">
         おすすめ
     </button>
-    <button class="tab-button" type="button" onclick="location.href='{{ url('/?tab=mylist') }}'">
+    <button class="tab-button {{ request()->query('tab') === 'mylist' ? 'active' : '' }}" type="button" onclick="location.href='{{ url('/?tab=mylist') }}'">
         マイリスト
     </button>
 </div>
