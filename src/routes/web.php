@@ -16,7 +16,7 @@ Route::post('logout',[LoginController::class,'destroy']);
 Route::get('/', [ItemController::class, 'index']);
 Route::post('/', [ItemController::class, 'index']);
 Route::get('/item/{id}', [ItemController::class, 'show'])->name('items.show');
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
     Route::post('/item/{id}/toggle-like', [ItemController::class, 'toggleLike'])->name('item.toggleLike');
     Route::get('sell', [ItemController::class, 'sell']);
     Route::post('sell', [ItemController::class, 'update'])->name('item.update');
