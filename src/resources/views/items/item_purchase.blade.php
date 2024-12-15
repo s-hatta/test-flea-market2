@@ -43,7 +43,8 @@
         </table>
         <form method="POST" action="{{ url('/purchase/'.$item->id) }}">
             @csrf
-            <button type="submit" class="purchase-button">購入する</button>
+            <input type="hidden" name="payment_method" id="payment_method">
+            <button type="submit" class="purchase-button" onclick="setPaymentMethod()">購入する</button>
         </form>
     </div>
 </div>
@@ -59,6 +60,10 @@
         } else {
             selectedPayment.innerText = '選択してください';
         }
+    }
+    function setPaymentMethod() {
+        var paymentMethod = document.getElementById('payment').value;
+        document.getElementById('payment_method').value = paymentMethod;
     }
 </script>
 @endsection
