@@ -44,3 +44,14 @@ services:
     ports:
       - "1025:1025"  # SMTPポート
       - "8025:8025"  # Web UI用ポート
+  stripe-cli:
+    image: stripe/stripe-cli:latest
+    volumes:
+      - ./src/.env:/.env
+    entrypoint: ["/bin/sh", "-c"]
+    command: |
+      'STRIPE_API_KEY=$$(grep STRIPE_SECRET_KEY /.env | cut -d "=" -f2) &&
+      stripe listen --api-key $$STRIPE_API_KEY --forward-to http://nginx:80/webhook/stripe --skip-verify'
+    restart: unless-stopped
+    depends_on:
+      - nginx
