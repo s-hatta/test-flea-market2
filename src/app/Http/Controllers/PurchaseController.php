@@ -8,6 +8,7 @@ use App\Models\Address;
 use App\Models\User;
 use App\Models\Order;
 use App\Http\Requests\AddressRequest;
+use App\Http\Requests\PurchaseRequest;
 use App\Services\StripePaymentService;
 
 class PurchaseController extends Controller
@@ -27,7 +28,7 @@ class PurchaseController extends Controller
         return view('items/item_purchase', compact('user','item','address'));
     }
     
-    public function execute(Request $request)
+    public function execute(PurchaseRequest $request)
     {
         $user = Auth::user();
         $item = Item::where('id', $request['id'])->first();
