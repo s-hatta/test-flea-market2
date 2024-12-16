@@ -18,10 +18,11 @@
         <div class="payment-method">
             <h3>支払い方法</h3>
             <select id="payment" name="payment" onchange="displayPaymentMethod()">
-                <option value="">選択してください</option>
+                <option hidden>選択してください</option>
                 <option value="cvs">コンビニ払い</option>
                 <option value="card">カード払い</option>
             </select>
+            <div class="payment-alert">{{$errors->first('payment_method')}}</div>
         </div>
         <div class="shipping-address">
             <h3>配送先</h3>
