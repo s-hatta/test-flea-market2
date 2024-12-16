@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Item;
 use App\Models\Address;
 use App\Models\Order;
+use App\Http\Requests\AddressRequest;
 
 class UserController extends Controller
 {
@@ -37,7 +38,7 @@ class UserController extends Controller
         return view('mypage/profile_edit', compact('user'));
     }
     
-    public function update(Request $request)
+    public function update(AddressRequest $request)
     {
         $user = Auth::user();
         $user->name = $request->input('name');
