@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('item_id')->constrained('items');
             $table->foreignId('address_id')->constrained('addresses');
             $table->integer('price');
+            $table->string('payment_status')->default('pending');
+            $table->string('stripe_session_id')->nullable();
             $table->timestamps();
         });
     }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ItemController;
@@ -23,8 +24,11 @@ Route::middleware('auth', 'verified')->group(function () {
 	Route::post('/comments/{id}', [CommentController::class, 'store'])->name('comments.store');
     Route::get('/purchase/{id}', [PurchaseController::class, 'index']);
     Route::post('/purchase/{id}', [PurchaseController::class, 'execute']);
+    Route::get('/purchase/success/{order}', [PurchaseController::class, 'success'])->name('purchase.success');
+    Route::get('/purchase/cancel/{order}', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
     Route::get('/purchase/address/{id}', [PurchaseController::class, 'edit']);
     Route::get('/mypage', [UserController::class, 'index']);
     Route::get('/mypage/profile', [UserController::class, 'edit']);
     Route::post('/mypage/profile', [UserController::class, 'update'])->name('profile.update');
 });
+Route::post('/webhook/stripe', [PurchaseController::class, 'webhook'])->name('stripe.webhook')->withoutMiddleware(ValidateCsrfToken::class);
