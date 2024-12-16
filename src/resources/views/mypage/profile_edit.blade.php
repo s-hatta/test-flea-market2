@@ -18,16 +18,19 @@
             <div class="form__item">
                 <div class="form__item-label">ユーザー名</div>
                 <input class="form__item-input" type="text" name="name" value="{{ $user->name }}">
+                <div class="form__item-alert">{{$errors->first('name')}}</div>
             </div>
             {{--郵便番号--}}
             <div class="form__item">
                 <div class="form__item-label">郵便番号</div>
                 <input class="form__item-input" type="text" name="postal_code" value="{{ $user->address->postal_code }}">
+                <div class="form__item-alert">{{$errors->first('postal_code')}}</div>
             </div>
             {{--住所--}}
             <div class="form__item">
                 <div class="form__item-label">住所</div>
                 <input class="form__item-input" type="text" name="address" value="{{ $user->address->address }}">
+                <div class="form__item-alert">{{$errors->first('address')}}</div>
             </div>
             {{--建物名--}}
             <div class="form__item">
