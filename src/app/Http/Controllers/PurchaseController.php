@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Models\Address;
 use App\Models\User;
 use App\Models\Order;
+use App\Http\Requests\AddressRequest;
 use App\Services\StripePaymentService;
 
 class PurchaseController extends Controller
@@ -95,7 +96,7 @@ class PurchaseController extends Controller
         return view('items.address_edit', compact('item','address'));
     }
     
-    public function update(Request $request)
+    public function update(AddressRequest $request)
     {
         $user = Auth::user();
         $item = Item::where('id', $request['id'])->first();

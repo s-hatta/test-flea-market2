@@ -27,6 +27,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/purchase/success/{order}', [PurchaseController::class, 'success'])->name('purchase.success');
     Route::get('/purchase/cancel/{order}', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
     Route::get('/purchase/address/{id}', [PurchaseController::class, 'edit']);
+    Route::post('/purchase/address/{id}', [PurchaseController::class, 'update']);
     Route::get('/mypage', [UserController::class, 'index']);
     Route::get('/mypage/profile', [UserController::class, 'edit']);
     Route::post('/mypage/profile', [UserController::class, 'update'])->name('profile.update');
