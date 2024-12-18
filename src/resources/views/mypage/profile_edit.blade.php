@@ -11,7 +11,6 @@
             @csrf
             {{--プロフィール画像--}}
             <div class="form__item">
-                <div class="form__item-label">プロフィール画像</div>
                 <div class="profile-image" id="preview-container">
                     @if($user->img_url)
                         <img id="preview-image" src="{{ asset('storage/images/users/'.Auth::user()->img_url) }}" alt="プロフィール画像">
