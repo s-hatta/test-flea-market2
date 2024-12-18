@@ -1,6 +1,6 @@
 @extends('/layouts.common')
 @section('css')
-    <link rel="stylesheet" href="{{asset('css/auth.css')}}">
+    <link rel="stylesheet" href="{{asset('css/mypage/profile_edit.css')}}">
 @endsection
 @section('title','プロフィール設定')
 
@@ -10,9 +10,18 @@
         <form class="form" method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
             @csrf
             {{--プロフィール画像--}}
-            <div class="form__item">
-                <div class="form__item-label">プロフィール画像</div>
-                <input class="form__item-input" type="file" name="profile_image">
+            <div class="form__item--flex">
+                <div class="profile-image" id="preview-container">
+                    @if($user->img_url)
+                        <img id="preview-image" src="{{ asset('storage/images/users/'.Auth::user()->img_url) }}" alt="プロフィール画像">
+                    @else
+                        <div class="profile-image__placeholder" id="placeholder"></div>
+                    @endif
+                </div>
+                <label class="form__item-label--button">
+                    <input class="form__item-input" type="file" name="profile_image" id="profile-image-input" accept="image/*" hidden>
+                    画像を選択する
+                </label>
             </div>
             {{--ユーザー名--}}
             <div class="form__item">
@@ -42,3 +51,32 @@
         </form>
     </div>
 @endsection
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('profile-image-input');
+    const previewContainer = document.getElementById('preview-container');
+    const placeholder = document.getElementById('placeholder');
+    let previewImage = document.getElementById('preview-image');
+    
+    input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                if (!previewImage) {
+                    previewImage = document.createElement('img');
+                    previewImage.id = 'preview-image';
+                    previewImage.alt = 'プロフィール画像';
+                    if (placeholder) {
+                        previewContainer.removeChild(placeholder);
+                    }
+                    previewContainer.appendChild(previewImage);
+                }
+                previewImage.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+});
+</script>
