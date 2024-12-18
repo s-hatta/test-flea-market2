@@ -10,7 +10,7 @@
         <form class="form" method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
             @csrf
             {{--プロフィール画像--}}
-            <div class="form__item">
+            <div class="form__item--flex">
                 <div class="profile-image" id="preview-container">
                     @if($user->img_url)
                         <img id="preview-image" src="{{ asset('storage/images/users/'.Auth::user()->img_url) }}" alt="プロフィール画像">
@@ -18,7 +18,10 @@
                         <div class="profile-image__placeholder" id="placeholder"></div>
                     @endif
                 </div>
-                <input class="form__item-input" type="file" name="profile_image" id="profile-image-input" accept="image/*">
+                <label class="form__item-label--button">
+                    <input class="form__item-input" type="file" name="profile_image" id="profile-image-input" accept="image/*" hidden>
+                    画像を選択する
+                </label>
             </div>
             {{--ユーザー名--}}
             <div class="form__item">

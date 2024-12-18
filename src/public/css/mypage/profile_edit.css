@@ -14,9 +14,29 @@ h1 {
     margin: 50px auto;
 }
 
+.form__item--flex {
+    width: 100%;
+    margin: 50px auto;
+    display: flex;
+}
+
 .form__item-label {
     font-size: 24px;
     font-weight: bold;
+}
+
+.form__item-label--button {
+    height: 49px;
+    padding: 10px 20px;
+    margin: auto auto auto 30px;
+    justify-content: center;
+
+    border: solid 2px #ff5555;
+    border-radius: 10px;
+
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff5555;
 }
 
 .form__item-input {
