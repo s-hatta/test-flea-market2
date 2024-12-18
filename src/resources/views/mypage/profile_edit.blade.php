@@ -1,6 +1,6 @@
 @extends('/layouts.common')
 @section('css')
-    <link rel="stylesheet" href="{{asset('css/auth.css')}}">
+    <link rel="stylesheet" href="{{asset('css/mypage/profile_edit.css')}}">
 @endsection
 @section('title','プロフィール設定')
 
