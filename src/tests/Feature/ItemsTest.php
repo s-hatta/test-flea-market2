@@ -34,7 +34,9 @@ class ItemsTest extends TestCase
     */
     public function test_can_get_all_items(): void
     {
-        $items = Item::factory(10)->create();
+        $items = Item::factory(10)->create([
+            'owner_id' => User::factory()->create()->id,
+        ]);
         $response = $this->get('/');
         foreach ($items as $item) {
             $response->assertSee($item->name);
@@ -53,6 +55,7 @@ class ItemsTest extends TestCase
     {
         /* 購入済みの商品を作成 */
         $soldItem = Item::factory()->create([
+            'owner_id' => User::factory()->create()->id,
             'stock' => 0,
         ]);
         
