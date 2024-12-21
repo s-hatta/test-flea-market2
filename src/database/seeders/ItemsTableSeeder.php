@@ -21,6 +21,7 @@ class ItemsTableSeeder extends Seeder
         $params = [
             [
                 'name' => '腕時計',
+                'owner_id' => 1,
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '1',
                 'price' => 15000,
@@ -29,6 +30,7 @@ class ItemsTableSeeder extends Seeder
             ],
             [
                 'name' => 'HDD',
+                'owner_id' => 1,
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '2',
                 'price' => 5000,
@@ -37,6 +39,7 @@ class ItemsTableSeeder extends Seeder
             ],
             [
                 'name' => '玉ねぎ3束',
+                'owner_id' => 1,
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '3',
                 'price' => 300,
@@ -45,6 +48,7 @@ class ItemsTableSeeder extends Seeder
             ],
             [
                 'name' => '革靴',
+                'owner_id' => 1,
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '4',
                 'price' => 4000,
@@ -53,6 +57,7 @@ class ItemsTableSeeder extends Seeder
             ],
             [
                 'name' => 'ノートPC',
+                'owner_id' => 1,
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '1',
                 'price' => 45000,
@@ -61,6 +66,7 @@ class ItemsTableSeeder extends Seeder
             ],
             [
                 'name' => 'マイク',
+                'owner_id' => 1,
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '2',
                 'price' => 8000,
@@ -69,6 +75,7 @@ class ItemsTableSeeder extends Seeder
             ],
             [
                 'name' => 'ショルダーバッグ',
+                'owner_id' => 1,
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '3',
                 'price' => 3500,
@@ -77,6 +84,7 @@ class ItemsTableSeeder extends Seeder
             ],
             [
                 'name' => 'タンブラー',
+                'owner_id' => 1,
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '4',
                 'price' => 500,
@@ -85,6 +93,7 @@ class ItemsTableSeeder extends Seeder
             ],
             [
                 'name' => 'コーヒーミル',
+                'owner_id' => 1,
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '1',
                 'price' => 4000,
@@ -93,6 +102,7 @@ class ItemsTableSeeder extends Seeder
             ],
             [
                 'name' => 'メイクセット',
+                'owner_id' => 1,
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '2',
                 'price' => 2500,
