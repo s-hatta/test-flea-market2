@@ -4,7 +4,9 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\URL;
 use Tests\TestCase;
+use App\Models\User;
 
 class RegisterTest extends TestCase
 {
@@ -124,6 +126,7 @@ class RegisterTest extends TestCase
     */
     public function test_register_success_and_redirect(): void
     {
+        /* 会員登録 */
         $response = $this->get('/register');
         $response = $this->post('/register', [
             'name' => 'test',
@@ -131,10 +134,30 @@ class RegisterTest extends TestCase
             'password' => 'password123',
             'password_confirmation' => 'password123'
         ]);
+
+        /* 会員情報が登録されているか */
         $this->assertDatabaseHas('users', [
             'name' => 'test',
             'email' => 'test@example.com'
         ]);
-        $response->assertRedirect('login');
+        $user = User::where('email', 'test@example.com')->first();
+
+        /* メール認証画面が表示されているか */
+        $response->assertStatus(200);
+        $response->assertViewIs('auth.verify-email');
+
+        /* メール認証 */
+        $verificationUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            ['id' => $user->id, 'hash' => sha1($user->email)]
+        );
+
+        /* 認証URLにアクセス */
+        $response = $this->actingAs($user)->get($verificationUrl);
+
+        /* 認証後の確認 */
+        $this->assertTrue($user->fresh()->hasVerifiedEmail());
+        $response->assertRedirect('/?verified=1');  //loginではなくこちら
     }
 }
