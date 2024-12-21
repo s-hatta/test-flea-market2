@@ -69,7 +69,7 @@ class MyListTest extends TestCase
     }
     public function test_sold_items_show_sold_label2()
     {
-        $LikedItem = $this->makeLikedItem($this->condition_id);
+        $likedItem = $this->makeLikedItem($this->condition_id);
         
         $response = $this->actingAs($this->user)->get('/?tab=mylist');
         $response->assertStatus(200);
