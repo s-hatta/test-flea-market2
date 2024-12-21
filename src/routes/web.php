@@ -9,10 +9,12 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\CommentController;
 
-Route::get('register',[RegisterController::class,'create']);
-Route::post('register',[RegisterController::class,'store']);
-Route::get('login',[LoginController::class,'create'])->name('login');
-Route::post('login',[LoginController::class,'store']);
+Route::middleware('guest')->group(function () {
+    Route::get('register',[RegisterController::class,'create']);
+    Route::post('register',[RegisterController::class,'store']);
+    Route::get('login',[LoginController::class,'create'])->name('login');
+    Route::post('login',[LoginController::class,'store']);
+});
 Route::post('logout',[LoginController::class,'destroy']);
 Route::get('/', [ItemController::class, 'index']);
 Route::post('/', [ItemController::class, 'index']);
