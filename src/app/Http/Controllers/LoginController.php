@@ -58,6 +58,18 @@ class LoginController extends Controller
     public function store(LoginRequest $request)
     {
         return $this->loginPipeline($request)->then(function ($request) {
+            $user = auth()->user();
+            
+            /* 初回ログイン時はプロフィール設定画面へ */
+            if (is_null($user->last_login_at)) {
+                $user->last_login_at = now();
+                $user->save();
+                return redirect('/mypage/profile');
+            }
+            
+            /* 次回ログイン以降 */
+            $user->last_login_at = now();
+            $user->save();
             return app(LoginResponse::class);
         });
     }
