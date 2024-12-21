@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use DateTime;
+use App\Models\Item;
 
 class ItemsTableSeeder extends Seeder
 {
@@ -16,131 +16,93 @@ class ItemsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $now = new DateTime();
+        
         $this->copyImages();
         $params = [
             [
-                'owner_id' => 1,
                 'name' => '腕時計',
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '1',
                 'price' => 15000,
-                'stock' => 1,
                 'detail' => 'スタイリッシュなデザインのメンズ腕時計',
                 'img_url' => '/item_001.jpg',
-                'created_at' => $now,
-                'updated_at' => $now,
             ],
             [
-                'owner_id' => 1,
                 'name' => 'HDD',
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '2',
                 'price' => 5000,
-                'stock' => 1,
                 'detail' => '高速で信頼性の高いハードディスク',
                 'img_url' => '/item_002.jpg',
-                'created_at' => $now,
-                'updated_at' => $now,
             ],
             [
-                'owner_id' => 1,
                 'name' => '玉ねぎ3束',
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '3',
                 'price' => 300,
-                'stock' => 1,
                 'detail' => '新鮮な玉ねぎ3束のセット',
                 'img_url' => '/item_003.jpg',
-                'created_at' => $now,
-                'updated_at' => $now,
             ],
             [
-                'owner_id' => 1,
                 'name' => '革靴',
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '4',
                 'price' => 4000,
-                'stock' => 1,
                 'detail' => 'クラシックなデザインの革靴',
                 'img_url' => '/item_004.jpg',
-                'created_at' => $now,
-                'updated_at' => $now,
             ],
             [
-                'owner_id' => 1,
                 'name' => 'ノートPC',
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '1',
                 'price' => 45000,
-                'stock' => 1,
                 'detail' => '高性能なノートパソコン',
                 'img_url' => '/item_005.jpg',
-                'created_at' => $now,
-                'updated_at' => $now,
             ],
             [
-                'owner_id' => 1,
                 'name' => 'マイク',
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '2',
                 'price' => 8000,
-                'stock' => 1,
                 'detail' => '高音質のレコーディング用マイク',
                 'img_url' => '/item_006.jpg',
-                'created_at' => $now,
-                'updated_at' => $now,
             ],
             [
-                'owner_id' => 1,
                 'name' => 'ショルダーバッグ',
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '3',
                 'price' => 3500,
-                'stock' => 1,
                 'detail' => 'おしゃれなショルダーバッグ',
                 'img_url' => '/item_007.jpg',
-                'created_at' => $now,
-                'updated_at' => $now,
             ],
             [
-                'owner_id' => 1,
                 'name' => 'タンブラー',
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '4',
                 'price' => 500,
-                'stock' => 1,
                 'detail' => '使いやすいタンブラー',
                 'img_url' => '/item_008.jpg',
-                'created_at' => $now,
-                'updated_at' => $now,
             ],
             [
-                'owner_id' => 1,
                 'name' => 'コーヒーミル',
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '1',
                 'price' => 4000,
-                'stock' => 1,
                 'detail' => '手動のコーヒーミル',
                 'img_url' => '/item_009.jpg',
-                'created_at' => $now,
-                'updated_at' => $now,
             ],
             [
-                'owner_id' => 1,
                 'name' => 'メイクセット',
                 'brand_name' => 'ノーブランド',
                 'condition_id' => '2',
                 'price' => 2500,
-                'stock' => 1,
                 'detail' => '便利なメイクアップセット',
                 'img_url' => '/item_010.jpg',
-                'created_at' => $now,
-                'updated_at' => $now,
             ],
         ];
-        DB::table('items')->insert($params);
+        foreach ($params as $param) {
+            Item::factory()->create($param);
+        }
     }
     
     private function copyImages()
