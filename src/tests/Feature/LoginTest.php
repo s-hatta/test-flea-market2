@@ -81,7 +81,8 @@ class LoginTest extends TestCase
     {
         $user = User::factory()->create([
             'email' => 'test@example.com',
-            'password' => Hash::make('password123')
+            'password' => Hash::make('password123'),
+            'last_login_at' => '2024-01-01 00:00:00',
         ]);
         $response = $this->get('/login');
         $response = $this->post('/login', [
