@@ -5,7 +5,7 @@
         </a>
     </div>
     
-    @if (!request()->is('login') && !request()->is('register'))
+    @if (!request()->is('login') && !request()->is('register') && !request()->is('email/verify'))
     <div class="header-search">
         <form method="POST" action="{{ url('/') }}">
             @csrf
