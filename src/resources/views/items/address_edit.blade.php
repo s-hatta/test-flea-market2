@@ -1,6 +1,6 @@
 @extends('/layouts.common')
 @section('css')
-    
+    <link rel="stylesheet" href="{{asset('css/items/address_edit.css')}}">
 @endsection
 @section('title','住所の変更')
 
