@@ -48,9 +48,11 @@ class LikeTest extends DuskTestCase
             $browser->loginAs($this->user)
                     ->visit('/item/' . $this->item->id)
                     ->assertSeeIn('#like-count', '0')
+                    ->screenshot('like001_001')
                     ->click('#like-icon')
                     ->waitFor('#like-icon[src*="icon_liked.png"]')
-                    ->assertSeeIn('#like-count', '1');
+                    ->assertSeeIn('#like-count', '1')
+                    ->screenshot('like001_002');
         });
     }
 
@@ -67,9 +69,11 @@ class LikeTest extends DuskTestCase
             $browser->loginAs($this->user)
                     ->visit('/item/' . $this->item->id)
                     ->assertSourceHas('icon_like.png')
+                    ->screenshot('like002_001')
                     ->click('#like-icon')
                     ->waitFor('#like-icon[src*="icon_liked.png"]')
-                    ->assertSourceHas('icon_liked.png');
+                    ->assertSourceHas('icon_liked.png')
+                    ->screenshot('like002_002');
         });
     }
 
@@ -90,10 +94,12 @@ class LikeTest extends DuskTestCase
                     ->visit('/item/' . $this->item->id)
                     ->assertSeeIn('#like-count', '1')
                     ->assertSourceHas('icon_liked.png')
+                    ->screenshot('like003_001')
                     ->click('#like-icon')
                     ->waitFor('#like-icon[src*="icon_like.png"]')
                     ->assertSeeIn('#like-count', '0')
-                    ->assertSourceHas('icon_like.png');
+                    ->assertSourceHas('icon_like.png')
+                    ->screenshot('like003_002');
         });
     }
 }
