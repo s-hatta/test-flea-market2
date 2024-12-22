@@ -1,6 +1,6 @@
 @extends('/layouts.common')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/mypage/profile.css') }}">
     <link rel="stylesheet" href="{{ asset('css/parts/items.css') }}">
 @endsection
 
