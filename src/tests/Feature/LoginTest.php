@@ -19,7 +19,7 @@ class LoginTest extends TestCase
         
         「メールアドレスを入力してください」というバリデーションメッセージが表示されること
     */
-    public function test_email_validation_required(): void
+    public function test_login_001(): void
     {
         $response = $this->get('/login');
         $response = $this->post('/login', [
@@ -38,7 +38,7 @@ class LoginTest extends TestCase
         
         「パスワードを入力してください」というバリデーションメッセージが表示されること
     */
-    public function test_password_validation_required(): void
+    public function test_login_002(): void
     {
         $response = $this->get('/login');
         $response->assertStatus(200);
@@ -58,7 +58,7 @@ class LoginTest extends TestCase
         
         「ログイン情報が登録されていません」というバリデーションメッセージが表示されること
     */
-    public function test_invalid_credentials_error(): void
+    public function test_login_003(): void
     {
         $response = $this->get('/login');
         $response = $this->post('/login', [
@@ -77,7 +77,7 @@ class LoginTest extends TestCase
         
         ログイン処理が実行されること
     */
-    public function test_successful_login(): void
+    public function test_login_004(): void
     {
         $user = User::factory()->create([
             'email' => 'test@example.com',

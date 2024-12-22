@@ -19,7 +19,7 @@ class RegisterTest extends TestCase
         
         「お名前を入力してください」というバリデーションメッセージが表示されること
     */
-    public function test_register_validation_name_required()
+    public function test_register_001()
     {
         $response = $this->get('/register');
         $response = $this->post('/register', [
@@ -40,7 +40,7 @@ class RegisterTest extends TestCase
         
         「メールアドレスを入力してください」というバリデーションメッセージが表示されること
     */
-    public function test_register_validation_email_required()
+    public function test_register_002()
     {
         $response = $this->get('/register');
         $response = $this->post('/register', [
@@ -61,7 +61,7 @@ class RegisterTest extends TestCase
         
         「パスワードを入力してください」というバリデーションメッセージが表示されること
     */
-    public function test_register_validation_password_required()
+    public function test_register_003()
     {
         $response = $this->get('/register');
         $response = $this->post('/register', [
@@ -82,7 +82,7 @@ class RegisterTest extends TestCase
         
         「パスワードは8文字以上で入力してください」というバリデーションメッセージが表示されること
     */
-    public function test_register_validation_password_min()
+    public function test_register_004()
     {
         $response = $this->get('/register');
         $response = $this->post('/register', [
@@ -103,7 +103,7 @@ class RegisterTest extends TestCase
         
         「パスワードと一致しません」というバリデーションメッセージが表示されること
     */
-    public function test_register_validation_password_confirmed()
+    public function test_register_005()
     {
         $response = $this->get('/register');
         $response = $this->post('/register', [
@@ -124,7 +124,7 @@ class RegisterTest extends TestCase
         
         会員情報が登録され、ログイン画面に遷移すること
     */
-    public function test_register_success_and_redirect(): void
+    public function test_register_006()
     {
         /* 会員登録 */
         $response = $this->get('/register');

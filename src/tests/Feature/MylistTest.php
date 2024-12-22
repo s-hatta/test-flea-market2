@@ -36,7 +36,7 @@ class MyListTest extends TestCase
         
         いいねをした商品が表示される
     */
-    public function test_liked_items_are_displayed()
+    public function test_mylist_001(): void
     {
         $likedItem = $this->makeLikedItem($this->condition_id);
         $likedSoldItem = $this->makeLikedSoldItem($this->condition_id);
@@ -59,7 +59,7 @@ class MyListTest extends TestCase
         
         購入済み商品に「Sold」のラベルが表示される
     */
-    public function test_sold_items_show_sold_label1()
+    public function test_mylist_002_01(): void
     {
         $likedSoldItem = $this->makeLikedSoldItem($this->condition_id);
         
@@ -67,7 +67,7 @@ class MyListTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('class="sold-text"', false);
     }
-    public function test_sold_items_show_sold_label2()
+    public function test_mylist_002_02(): void
     {
         $likedItem = $this->makeLikedItem($this->condition_id);
         
@@ -82,7 +82,7 @@ class MyListTest extends TestCase
         
         自分が出品した商品が一覧に表示されない
     */
-    public function test_own_items_are_not_displayed()
+    public function test_mylist_003(): void
     {
         $likedItem = $this->makeLikedItem($this->condition_id);
         $likedSoldItem = $this->makeLikedSoldItem($this->condition_id);
@@ -105,7 +105,7 @@ class MyListTest extends TestCase
         
         何も表示されない
     */
-    public function test_unauthenticated_user_sees_nothing()
+    public function test_mylist_004(): void
     {
         $likedItem = $this->makeLikedItem($this->condition_id);
         $likedSoldItem = $this->makeLikedSoldItem($this->condition_id);

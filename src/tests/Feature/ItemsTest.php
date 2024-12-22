@@ -32,7 +32,7 @@ class ItemsTest extends TestCase
         
         すべての商品が表示される
     */
-    public function test_can_get_all_items(): void
+    public function test_item_001(): void
     {
         $items = Item::factory(10)->create([
             'owner_id' => User::factory()->create()->id,
@@ -51,7 +51,7 @@ class ItemsTest extends TestCase
         
         購入済み商品に「Sold」のラベルが表示される
     */
-    public function test_sold_items_show_sold_label1(): void
+    public function test_item_002_01(): void
     {
         /* 購入済みの商品を作成 */
         $soldItem = Item::factory()->create([
@@ -68,7 +68,7 @@ class ItemsTest extends TestCase
         $items = $response->viewData('items');
         $this->assertTrue($items->contains($soldItem));
     }
-    public function test_sold_items_show_sold_label2(): void
+    public function test_item_002_02(): void
     {
         /* 在庫ありの商品を作成 */
         $item = Item::factory()->create();
@@ -89,7 +89,7 @@ class ItemsTest extends TestCase
         
         自分が出品した商品が一覧に表示されない
     */
-    public function test_own_items_are_not_displayed(): void
+    public function test_item_003(): void
     {
         /* テストユーザーを作成 */
         $user = User::factory()->create();

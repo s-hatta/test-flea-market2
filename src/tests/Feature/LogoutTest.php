@@ -12,7 +12,7 @@ class LogoutTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_logout_success_and_redirect(): void
+    public function test_logout_001(): void
     {
         $user = User::factory()->create([
             'email' => 'test@example.com',
