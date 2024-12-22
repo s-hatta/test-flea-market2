@@ -55,3 +55,6 @@ services:
     restart: unless-stopped
     depends_on:
       - nginx
+      
+  selenium:
+    image: selenium/standalone-chrome:latest
