@@ -67,7 +67,14 @@ class ItemController extends Controller
         $categories = $item->categories;
         $likeNum = $item->users()->wherePivot('is_like', true)->count();
         $comments = $item->comments;
-        return view('items/item_detail', compact('item','condition','categories','likeNum','comments'));
+        $isLiked = false;
+        if( Auth::check() ) {
+            $isLiked = $item->users()
+            ->where('user_id', Auth::id())
+            ->where('is_like', true)
+            ->exists();
+        }
+        return view('items/item_detail', compact('item','condition','categories','likeNum','comments','isLiked'));
     }
     
     public function toggleLike(Request $request, $itemId)

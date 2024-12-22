@@ -21,7 +21,13 @@
         <div class="rating">
             <table>
                 <tr>
-                    <th><img src="{{ asset('images/icons/icon_like.png') }}" alt="いいね" id="like-icon" onclick="toggleLike({{ $item->id }})"></th>
+                    <th>
+                        @if( $isLiked )
+                            <img src="{{ asset('images/icons/icon_liked.png') }}" alt="いいね" id="like-icon" onclick="toggleLike({{ $item->id }})">
+                        @else
+                            <img src="{{ asset('images/icons/icon_like.png') }}" alt="いいね" id="like-icon" onclick="toggleLike({{ $item->id }})">
+                        @endif
+                    </th>
                     <th><img src="{{ asset('images/icons/icon_comment.png') }}" alt="コメント"></th>
                 </tr>
                 <tr>
@@ -95,18 +101,24 @@
 
 {{-- 押下するごとにいいねの登録／解除をおこなう --}}
 <script>
-    function toggleLike(itemId) {
-        fetch(`/item/${itemId}/toggle-like`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({})
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('like-count').innerText = data.likeNum;
-        });
-    }
+function toggleLike(itemId) {
+    const likeIcon = document.getElementById('like-icon');
+    
+    fetch(`/item/${itemId}/toggle-like`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({})
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('like-count').innerText = data.likeNum;
+        // アイコンの画像ソースを切り替え
+        likeIcon.src = likeIcon.src.includes('icon_liked.png') 
+            ? '{{ asset("images/icons/icon_like.png") }}'
+            : '{{ asset("images/icons/icon_liked.png") }}';
+    });
+}
 </script>
