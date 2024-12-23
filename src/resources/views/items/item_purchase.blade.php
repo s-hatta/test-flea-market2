@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="wrapper">
     <div class="purchase-details">
         <div class="item-info-container">
             <div class="item-image">

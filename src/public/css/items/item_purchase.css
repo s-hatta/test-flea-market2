@@ -3,10 +3,10 @@
     全体のレイアウト
 
 *******************************************************************************/
-.container {
+.wrapper {
     max-width: 1500px;
     padding: 0 20px;
-    margin: auto;
+    margin: auto auto 100px auto;
     display: grid;
     grid-template-columns: 3fr 2fr;
     gap: 40px;
@@ -139,7 +139,7 @@ h3 {
 }
 
 .purchase-summary th {
-    text-align: center;
+    text-align: left;
 }
 
 .purchase-summary td {
@@ -170,7 +170,7 @@ h3 {
 
 *******************************************************************************/
 @media screen and (max-width: 850px) {
-    .container {
+    .wrapper {
         grid-template-columns: 1fr;
         gap: 20px;
     }
@@ -182,9 +182,8 @@ h3 {
 }
 
 @media screen and (max-width: 480px) {
-    .container {
+    .wrapper {
         padding: 0 10px;
-        margin: 20px auto;
     }
 
     .item-info-container {
