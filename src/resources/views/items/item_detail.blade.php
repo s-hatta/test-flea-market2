@@ -16,7 +16,7 @@
         {{-- ブランド名 --}}
         <p class="brand-name">{{$item->brand_name}}</p>
         {{-- 価格 --}}
-        <p class="price">¥{{ number_format($item->price) }} (税込)</p>
+        <p class="price">¥<span>{{ number_format($item->price) }}</span> (税込)</p>
         {{-- いいね数とコメント数 --}}
         <div class="rating">
             <table>
