@@ -12,7 +12,6 @@
         "stripe/stripe-php": "^16.3"
     },
     "require-dev": {
-        "askdkc/breezejp": "^1.8",
         "fakerphp/faker": "^1.23",
         "laravel/dusk": "^8.2",
         "laravel/pail": "^1.1",
