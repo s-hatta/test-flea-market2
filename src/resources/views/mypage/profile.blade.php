@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/mypage/profile.css') }}">
     <link rel="stylesheet" href="{{ asset('css/parts/items.css') }}">
 @endsection
+@section('title','マイページ')
 
 @section('content')
 <div class="container">
