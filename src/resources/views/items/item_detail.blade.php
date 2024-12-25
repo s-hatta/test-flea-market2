@@ -40,9 +40,15 @@
             </table>
         </div>
         {{-- 購入ボタン --}}
+        @if($item->stock == 0)
+        <label class="purchase-button__sold-out">
+            売り切れ
+        </label>
+        @else
         <button class="purchase-button" type="button" onclick="location.href='{{ url('/purchase/'.$item->id) }}'">
             購入手続きへ
         </button>
+        @endif
         {{-- 商品説明 --}}
         <div class="item-description">
             <h2>商品説明</h2>

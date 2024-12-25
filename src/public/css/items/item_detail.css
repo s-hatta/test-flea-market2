@@ -61,19 +61,27 @@
 }
 
 /* ボタン */
-.item-info button {
+.purchase-button, 
+.purchase-button__sold-out {
+    display: block;
     width: 100%;
     padding: 8px;
-    background-color: #ff5555;
     color: white;
     border: none;
     border-radius: 4px;
     font-size: 30px;
     font-weight: bold;
+    text-align: center;
     cursor: pointer;
 }
-.item-info button:hover {
+.purchase-button {
+    background-color: #ff5555;
+}
+.purchase-button:hover button {
     background-color: #ff3333;
+}
+.purchase-button__sold-out {
+    background-color: #883333;
 }
 
 /* ブランド名 */
