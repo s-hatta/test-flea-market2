@@ -10,7 +10,7 @@
     <div class="profile-header">
         {{--プロフィール画像--}}
         <div class="profile-image">
-            @if($user->img_url)
+            @if(Auth::user()->img_url)
                 <img src="{{ asset('storage/images/users/'.Auth::user()->img_url) }}" alt="プロフィール画像">
             @else
                 <div class="profile-image__placeholder"></div>
@@ -23,35 +23,14 @@
     </div>
     {{--表示切替用のタブ--}}
     <div class="profile-tabs">
-        <button class="tab-button active" data-tab="exhibitions">出品した商品</button>
-        <button class="tab-button" data-tab="purchases">購入した商品</button>
+        <button class="tab-button {{ request()->query('tab') !== 'buy' ? 'active' : '' }}" type="button" onclick="location.href='{{ url('/mypage/?tab=sell') }}'">
+            出品した商品
+        </button>
+        <button class="tab-button {{ request()->query('tab') === 'buy' ? 'active' : '' }}" type="button" onclick="location.href='{{ url('/mypage/?tab=buy') }}'">
+            購入した商品
+        </button>
     </div>
-    {{--出品した商品--}}
-    <div id="exhibitions" class="tab-content active">
-        @include('parts.items', ['items'=>$exhibitedItems])
-    </div>
-    {{--購入した商品--}}
-    <div id="purchases" class="tab-content">
-        @include('parts.items', ['items'=>$purchasedItems])
-    </div>
+    {{--商品一覧--}}
+    @include('parts.items', ['items' => $items])
 </div>
 @endsection
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const tabs = document.querySelectorAll('.tab-button');
-        const contents = document.querySelectorAll('.tab-content');
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', function() {
-                const target = document.getElementById(this.dataset.tab);
-
-                tabs.forEach(t => t.classList.remove('active'));
-                contents.forEach(c => c.classList.remove('active'));
-
-                this.classList.add('active');
-                target.classList.add('active');
-            });
-        });
-    });
-</script>

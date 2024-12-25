@@ -13,12 +13,22 @@ use App\Http\Requests\ProfileRequest;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $exhibitedItems = Item::where('owner_id', '=', Auth::id())->get();
-        $purchasedItems = Order::where('payment_status','paid')->where('user_id', Auth::id())->with('item')->get()->pluck('item');
-        return view('mypage/profile', compact('user', 'exhibitedItems', 'purchasedItems'));
+        $items = null;
+        $tab = $request->query('tab');
+        switch($tab) {
+            case 'sell':
+            default:
+                $items = Item::where('owner_id', '=', Auth::id())->get();
+                break;
+                
+            case 'buy':
+                $items = Order::where('payment_status','paid')->where('user_id', Auth::id())->with('item')->get()->pluck('item');
+                break;
+        }
+        return view('mypage/profile', compact('items'));
     }
     
     public function edit()
