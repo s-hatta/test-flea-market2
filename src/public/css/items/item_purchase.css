@@ -163,6 +163,7 @@ h3 {
 ==============================================================================*/
 .purchase-button {
     width: 100%;
+    margin-top: 50px;
     padding: 10px;
     background: #ff5555;
     color: white;
