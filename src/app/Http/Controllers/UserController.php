@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $exhibitedItems = Item::where('owner_id', '=', Auth::id())->get();
-        $purchasedItems = Order::where('user_id', Auth::id())->with('item')->get()->pluck('item');
+        $purchasedItems = Order::where('payment_status','paid')->where('user_id', Auth::id())->with('item')->get()->pluck('item');
         return view('mypage/profile', compact('user', 'exhibitedItems', 'purchasedItems'));
     }
     
