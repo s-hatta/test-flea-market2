@@ -2,6 +2,7 @@
 @section('css')
     <link rel="stylesheet" href="{{asset('css/auth.css')}}">
 @endsection
+@section('title','ログイン')
 
 @section('content')
     <div class="wrapper">

@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/items/items.css') }}">
     <link rel="stylesheet" href="{{ asset('css/parts/items.css') }}">
 @endsection
+@section('title','トップページ')
 
 @section('content')
 <div class="tab-container">
