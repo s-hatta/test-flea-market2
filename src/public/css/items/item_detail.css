@@ -16,12 +16,29 @@
 .item-image {
     width: 100%;
     padding: 20px;
+    position: relative;
 }
 
 .item-image img {
     width: 100%;
     height: auto;
     object-fit: contain;
+    display: block;
+}
+
+.sold-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.item-image:has(.sold-text) img {
+    filter: brightness(0.5);
 }
 
 /*==============================================================================
