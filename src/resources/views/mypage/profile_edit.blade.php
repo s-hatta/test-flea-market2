@@ -22,6 +22,8 @@
                     <input class="form__item-input" type="file" name="profile_image" id="profile-image-input" accept="image/*" hidden>
                     画像を選択する
                 </label>
+                <div class="form__item-space"></div>
+                <div class="form__item-alert">{{$errors->first('profile_image')}}</div>
             </div>
             {{--ユーザー名--}}
             <div class="form__item">
