@@ -7,7 +7,10 @@
 <div class="wrapper">
     {{-- 商品イメージ --}}
     <div class="item-image">
-        <img src="{{ asset('storage/images/items/'.$item->img_url) }}" alt="商品画像">
+    <img src="{{ asset('storage/images/items/'.$item->img_url) }}" alt="商品画像" id="itemImage">
+        @if($item->stock === 0)
+            <div class="sold-text">Sold</div>
+        @endif
     </div>
     {{-- 商品情報 --}}
     <div class="item-info">
@@ -37,9 +40,15 @@
             </table>
         </div>
         {{-- 購入ボタン --}}
+        @if($item->stock == 0)
+        <label class="purchase-button__sold-out">
+            売り切れ
+        </label>
+        @else
         <button class="purchase-button" type="button" onclick="location.href='{{ url('/purchase/'.$item->id) }}'">
             購入手続きへ
         </button>
+        @endif
         {{-- 商品説明 --}}
         <div class="item-description">
             <h2>商品説明</h2>
@@ -99,8 +108,10 @@
 </div>
 @endsection
 
-{{-- 押下するごとにいいねの登録／解除をおこなう --}}
 <script>
+/*
+    押下するごとにいいねの登録／解除をおこなう
+*/
 function toggleLike(itemId) {
     const likeIcon = document.getElementById('like-icon');
     
@@ -121,4 +132,31 @@ function toggleLike(itemId) {
             : '{{ asset("images/icons/icon_liked.png") }}';
     });
 }
+
+/*
+    押下するごとにいいねの登録／解除をおこなう
+*/
+function adjustSoldPosition() {
+    const img = document.getElementById('itemImage');
+    const soldText = document.querySelector('.sold-text');
+    if (soldText && img) {
+        soldText.style.top = (img.offsetHeight / 2) + 'px';
+    }
+}
+
+/*
+    画像読み込み完了時に「sold」の位置を調整
+*/
+document.addEventListener('DOMContentLoaded', () => {
+    const img = document.getElementById('itemImage');
+    if (img) {
+        img.onload = adjustSoldPosition;
+        adjustSoldPosition();
+    }
+});
+
+/*
+    画面サイズ変更時に「sold」の位置を調整
+*/
+window.addEventListener('resize', adjustSoldPosition);
 </script>

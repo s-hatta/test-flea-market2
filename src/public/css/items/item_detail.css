@@ -16,12 +16,29 @@
 .item-image {
     width: 100%;
     padding: 20px;
+    position: relative;
 }
 
 .item-image img {
     width: 100%;
     height: auto;
     object-fit: contain;
+    display: block;
+}
+
+.sold-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.item-image:has(.sold-text) img {
+    filter: brightness(0.5);
 }
 
 /*==============================================================================
@@ -44,19 +61,27 @@
 }
 
 /* ボタン */
-.item-info button {
+.purchase-button, 
+.purchase-button__sold-out {
+    display: block;
     width: 100%;
     padding: 8px;
-    background-color: #ff5555;
     color: white;
     border: none;
     border-radius: 4px;
     font-size: 30px;
     font-weight: bold;
+    text-align: center;
     cursor: pointer;
 }
-.item-info button:hover {
+.purchase-button {
+    background-color: #ff5555;
+}
+.purchase-button:hover button {
     background-color: #ff3333;
+}
+.purchase-button__sold-out {
+    background-color: #883333;
 }
 
 /* ブランド名 */
