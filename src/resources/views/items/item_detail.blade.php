@@ -98,9 +98,9 @@
                 <form method="POST" action="{{ route('comments.store', $item->id) }}">
                     @csrf
                     <h2>商品へのコメント</h2>
+                    <p class="comment-alert">{{$errors->first('comment')}}</p>
                     <textarea name="comment" placeholder="コメントを入力する"></textarea>
                     <button class="submit-comment">コメントを送信する</button>
-                    {{$errors->first('comment')}}
                 </form>
             </div>
         </div>
