@@ -2,6 +2,7 @@
 @section('css')
     <link rel="stylesheet" href="{{asset('css/items/item_detail.css')}}">
 @endsection
+@section('title','商品詳細 - '. $item->name)
 
 @section('content')
 <div class="wrapper">
