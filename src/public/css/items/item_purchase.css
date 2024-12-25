@@ -87,6 +87,13 @@ h3 {
     border: 1px solid #5f5f5f;
     border-radius: 4px;
 }
+.payment-method select:not([size]):not([multiple]) {
+    background-color: #fff;
+}
+.payment-method select:not([size]):not([multiple]):focus {
+    background-color: #636769;
+    color: #fff;
+}
 
 .payment-alert {
     font-size: 16px;
@@ -156,6 +163,7 @@ h3 {
 ==============================================================================*/
 .purchase-button {
     width: 100%;
+    margin-top: 50px;
     padding: 10px;
     background: #ff5555;
     color: white;
