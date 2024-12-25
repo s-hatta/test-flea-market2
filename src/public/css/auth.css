@@ -30,6 +30,11 @@ h1 {
     font-size: 24px;
 }
 
+.form__item-alert {
+    color: #ff0000;
+    font-size: 16px;
+}
+
 .form__submit {
     background: #ff5555;
     border: none;
