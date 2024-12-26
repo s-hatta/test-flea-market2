@@ -47,6 +47,8 @@
         <form method="POST" action="{{ url('/purchase/'.$item->id) }}">
             @csrf
             <input type="hidden" name="payment_method" id="payment_method">
+            <input type="hidden" name="postal_code" value="{{ $address->postal_code }}">
+            <input type="hidden" name="address" value="{{ $address->address }}">
             <button type="submit" class="purchase-button" onclick="setPaymentMethod()">購入する</button>
         </form>
     </div>
