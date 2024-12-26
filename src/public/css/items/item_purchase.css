@@ -1,0 +1,219 @@
+/******************************************************************************
+
+    全体のレイアウト
+
+*******************************************************************************/
+.wrapper {
+    max-width: 1500px;
+    padding: 0 20px;
+    margin: auto auto 100px auto;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 40px;
+}
+
+h2 {
+    font-size: 30px;
+    margin: 0;
+}
+
+h3 {
+    font-size: 20px;
+    margin: 0;
+}
+
+/******************************************************************************
+
+    商品詳細
+
+*******************************************************************************/
+.purchase-details {
+    padding: 20px;
+}
+
+/*=============================================================================
+    商品情報
+==============================================================================*/
+.item-info-container {
+    display: flex;
+    gap: 20px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #000;
+}
+
+/* 商品画像 */
+.item-image {
+    width: 177px;
+    height: auto;
+}
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-info {
+    margin-left: 30px;
+}
+
+/* 商品価格 */
+.item-info p {
+    font-size: 27px;
+    margin: 10px;
+}
+.price {
+    font-size: 32px;
+    margin: 0;
+}
+
+/*=============================================================================
+    支払い方法
+==============================================================================*/
+.payment-method {
+    margin-top: 20px;
+    padding-left: 35px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #000;
+}
+
+.payment-method select {
+    width: 265px;
+    margin-top: 30px;
+    margin-left: 96px;
+    padding: 5px;
+    color: #5f5f5f;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #5f5f5f;
+    border-radius: 4px;
+}
+.payment-method select:not([size]):not([multiple]) {
+    background-color: #fff;
+}
+.payment-method select:not([size]):not([multiple]):focus {
+    background-color: #636769;
+    color: #fff;
+}
+
+.payment-alert {
+    font-size: 16px;
+    color: #ff0000;
+}
+
+/*=============================================================================
+    配送先
+==============================================================================*/
+.shipping-address {
+    margin-top: 20px;
+    padding-left: 35px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #000;
+    position: relative;
+}
+
+.shipping-address p {
+    margin: 0;
+    padding-left: 96px;
+    font-size: 20px;
+    font-weight: 600px;
+}
+
+.change-address {
+    position: absolute;
+    right: 30px;
+    top: 0px;
+    color: #007ccc;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.address-alert {
+    font-size: 16px;
+    color: #ff0000;
+}
+
+/******************************************************************************
+
+    サマリー
+
+*******************************************************************************/
+/*=============================================================================
+    支払い情報
+==============================================================================*/
+.purchase-summary table {
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+.purchase-summary th,
+.purchase-summary td {
+    padding: 30px 20px;
+    border-bottom: 1px solid #000;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.purchase-summary th {
+    text-align: left;
+}
+
+.purchase-summary td {
+    text-align: right;
+}
+
+/*=============================================================================
+    購入ボタン
+==============================================================================*/
+.purchase-button {
+    width: 100%;
+    margin-top: 50px;
+    padding: 10px;
+    background: #ff5555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 26px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.purchase-button:hover {
+    background: #ff3333;
+}
+
+/******************************************************************************
+
+    レスポンシブデザイン
+
+*******************************************************************************/
+@media screen and (max-width: 850px) {
+    .wrapper {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .purchase-summary {
+        position: static;
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .wrapper {
+        padding: 0 10px;
+    }
+
+    .item-info-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .item-image {
+        width: 100%;
+        max-width: 200px;
+        height: auto;
+        aspect-ratio: 1;
+    }
+}
