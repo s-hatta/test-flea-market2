@@ -34,4 +34,5 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/mypage/profile', [UserController::class, 'edit']);
     Route::post('/mypage/profile', [UserController::class, 'update'])->name('profile.update');
 });
+Route::get('/email/verify/{id}/{hash}', [UserController::class, 'verify'])->name('verification.verify');
 Route::post('/webhook/stripe', [PurchaseController::class, 'webhook'])->name('stripe.webhook')->withoutMiddleware(ValidateCsrfToken::class);

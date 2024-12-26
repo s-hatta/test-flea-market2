@@ -10,6 +10,7 @@ use App\Models\Item;
 use App\Models\Address;
 use App\Models\Order;
 use App\Http\Requests\ProfileRequest;
+use DateTime;
 
 class UserController extends Controller
 {
@@ -29,6 +30,19 @@ class UserController extends Controller
                 break;
         }
         return view('mypage/profile', compact('items'));
+    }
+    
+    public function verify($request)
+    {
+        $id = $request;
+        $user = User::where('id',$id)->first();
+        if( is_null($user) )
+            {
+            return view('auth.login');
+            }
+        $user->email_verified_at = new DateTime();
+        $user->save();
+        return view('auth.login');
     }
     
     public function edit()
