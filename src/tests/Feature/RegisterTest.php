@@ -142,22 +142,7 @@ class RegisterTest extends TestCase
         ]);
         $user = User::where('email', 'test@example.com')->first();
 
-        /* メール認証画面が表示されているか */
-        $response->assertStatus(200);
-        $response->assertViewIs('auth.verify-email');
-
-        /* メール認証 */
-        $verificationUrl = URL::temporarySignedRoute(
-            'verification.verify',
-            now()->addMinutes(60),
-            ['id' => $user->id, 'hash' => sha1($user->email)]
-        );
-
-        /* 認証URLにアクセス */
-        $response = $this->actingAs($user)->get($verificationUrl);
-
-        /* 認証後の確認 */
-        $this->assertTrue($user->fresh()->hasVerifiedEmail());
-        $response->assertRedirect('/?verified=1');  //loginではなくこちら
+        /* ログイン画面に遷移すること */
+        $response->assertViewIs('auth.login');
     }
 }

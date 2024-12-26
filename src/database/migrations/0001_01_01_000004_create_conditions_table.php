@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('conditions', function (Blueprint $table) {
             $table->id();
-            $table->string('condition')->unique();
+            $table->string('condition');
             $table->timestamps();
         });
     }

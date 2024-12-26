@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Item;
 
-class PurchaseRequest extends AddressRequest
+class PurchaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,18 +22,21 @@ class PurchaseRequest extends AddressRequest
      */
     public function rules(): array
     {
-        $rules = parent::rules();
-        return array_merge($rules, [
+        return [
             'payment_method' => 'required|in:cvs,card',
-        ]);
+            'postal_code' => 'required|regex:/^[0-9]{3}-[0-9]{4}$/',
+            'address' => 'required',
+        ];
     }
     
     public function messages(): array
     {
-        $messages = parent::messages();
-        return array_merge($messages, [
+        return [
             'payment_method.required' => '支払い方法を選択してください',
             'payment_method.in' => '支払い方法を選択してください',
-        ]);
+            'postal_code.required' => '配送先を選択してください',
+            'postal_code.regex' => '配送先を選択してください',
+            'address.required' => '配送先を選択してください',
+        ];
     }
 }

@@ -105,62 +105,27 @@ class ProfileTest extends TestCase
             $response->assertSee($item->name);
             $response->assertSee('storage/images/items/' . $item->img_url, false);
         }
-        
-        // Get the response content for DOM parsing
-        $content = $response->getContent();
-        
-        /* 出品した商品の中身を取得（id="exhibitionsからその閉じタグまで） */
-        $exhibitionsIndex = strpos($content, 'id="exhibitions"');
-        $exhibitionsEnd = $this->findClosingDiv($content, $exhibitionsIndex);
-        $exhibitionsContent = substr($content, $exhibitionsIndex, $exhibitionsEnd - $exhibitionsIndex);
-        
-        /* 購入した商品の中身を取得（id="purchasesからその閉じタグまで） */
-        $purchasesIndex = strpos($content, 'id="purchases"');
-        $purchasesEnd = $this->findClosingDiv($content, $purchasesIndex);
-        $purchasesContent = substr($content, $purchasesIndex, $purchasesEnd - $purchasesIndex);
-        
-        /* 出品した商品一覧 */
-        foreach ($exhibitedItems as $item) {
-            $this->assertStringContainsString($item->name, $exhibitionsContent);
-            $this->assertStringContainsString('storage/images/items/' . $item->img_url, $exhibitionsContent);
-            $this->assertStringNotContainsString($item->name, $purchasesContent);
-        }
-        $this->assertEquals($exhibitedItems->count(), substr_count($exhibitionsContent, 'item-card'));
-        
-        /* 購入した商品一覧 */
         foreach ($purchasedItems as $item) {
-            $this->assertStringContainsString($item->name, $purchasesContent);
-            $this->assertStringContainsString('storage/images/items/' . $item->img_url, $purchasesContent);
-            $this->assertStringNotContainsString($item->name, $exhibitionsContent);
+            $response->assertDontSee($item->name);
         }
-        $this->assertEquals($purchasedItems->count(), substr_count($purchasesContent, 'item-card'));
-    }
-
-    /*
-        指定されたdiv要素の終了位置を見つける
-    */
-    private function findClosingDiv($content, $startIndex)
-    {
-        $divCount = 1;
-        $currentIndex = $startIndex + 1;
-        $contentLength = strlen($content);
-
-        while ($divCount > 0 && $currentIndex < $contentLength) {
-            $openTag = strpos($content, '<div', $currentIndex);
-            $closeTag = strpos($content, '</div>', $currentIndex);
-
-            if ($closeTag === false) {
-                break;
-            }
-
-            if ($openTag === false || $closeTag < $openTag) {
-                $divCount--;
-                $currentIndex = $closeTag + 6;
-            } else {
-                $divCount++;
-                $currentIndex = $openTag + 4;
-            }
+        
+        /* プロフィールページを開く */
+        $response = $this->get('/mypage/?tab=buy');
+        $response->assertStatus(200);
+        
+        /* プロフィール画像 */
+        $response->assertSee('storage/images/users/' . $this->user->img_url, false);
+        
+        /* ユーザー名 */
+        $response->assertSee($this->user->name);
+        
+        /* 購入した商品が表示されているか */
+        foreach ($exhibitedItems as $item) {
+            $response->assertDontSee($item->name);
         }
-        return $currentIndex;
+        foreach ($purchasedItems as $item) {
+            $response->assertSee($item->name);
+            $response->assertSee('storage/images/items/' . $item->img_url, false);
+        }
     }
 }

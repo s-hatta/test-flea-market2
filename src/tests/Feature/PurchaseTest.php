@@ -74,8 +74,11 @@ class PurchaseTest extends TestCase
         $response->assertStatus(200);
         
         /* 商品を選択して「購入する」ボタンを押下 */
+        $userItem = $this->item->users()->where('user_id', $this->user->id)->first();
         $response = $this->post("/purchase/{$this->item->id}", [
-            'payment_method' => 'card'
+            'payment_method' => 'card',
+            'postal_code' => $userItem->address->postal_code,
+            'address' => $userItem->address->address,
         ]);
         $response->assertStatus(302);
 
@@ -118,8 +121,11 @@ class PurchaseTest extends TestCase
         $response->assertStatus(200);
         
         /* 商品を選択して「購入する」ボタンを押下 */
+        $userItem = $this->item->users()->where('user_id', $this->user->id)->first();
         $response = $this->post("/purchase/{$this->item->id}", [
-            'payment_method' => 'card'
+            'payment_method' => 'card',
+            'postal_code' => $userItem->address->postal_code,
+            'address' => $userItem->address->address,
         ]);
         $response->assertStatus(302);
 
@@ -155,10 +161,10 @@ class PurchaseTest extends TestCase
         $this->actingAs($this->user);
         
         /* プロフィールの購入した商品一覧になにもないことを確認 */
-        $response = $this->get('/mypage');
+        $response = $this->get('/mypage/?tab=buy');
         $response->assertStatus(200);
-        $response->assertViewHas('purchasedItems');
-        $purchasedItems = $response->viewData('purchasedItems');
+        $response->assertViewHas('items');
+        $purchasedItems = $response->viewData('items');
         $this->assertFalse($purchasedItems->contains('id',$this->item->id));
         
         /* 商品購入画面を開く */
@@ -166,22 +172,31 @@ class PurchaseTest extends TestCase
         $response->assertStatus(200);
         
         /* 商品を選択して「購入する」ボタンを押下 */
+        $userItem = $this->item->users()->where('user_id', $this->user->id)->first();
         $response = $this->post("/purchase/{$this->item->id}", [
-            'payment_method' => 'card'
+            'payment_method' => 'card',
+            'postal_code' => $userItem->address->postal_code,
+            'address' => $userItem->address->address,
         ]);
         $response->assertStatus(302);
 
         /* 本来ならstripeのwebhookによって数量が0になるが、テストなので強制的に書き換え */
-        $this->item->stock = 0;
-        $this->item->save();
+        $order = Order::where('user_id', $this->user->id)
+            ->where('item_id', $this->item->id)
+            ->first();
+        $order->payment_status = 'paid';
+        $order->save();
+        $orderItem = $order->item;
+        $orderItem->stock = 0;
+        $orderItem->save();
 
         /* プロフィール画面を表示する */
-        $response = $this->get('/mypage');
+        $response = $this->get('/mypage/?tab=buy');
         $response->assertStatus(200);
         
         /* 購入した商品がプロフィールの購入した商品一覧に追加されている */
-        $response->assertViewHas('purchasedItems');
-        $purchasedItems = $response->viewData('purchasedItems');
+        $response->assertViewHas('items');
+        $purchasedItems = $response->viewData('items');
         $this->assertTrue($purchasedItems->contains('id',$this->item->id));
     }
 
