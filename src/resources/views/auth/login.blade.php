@@ -8,6 +8,9 @@
     <div class="wrapper">
         {{-- ログインフォーム --}}
         <h1>ログイン</h1>
+        @if(isset($message))
+            <div class="form__item-alert">{{$message}}</div>
+        @endif
         <form class="form" method="POST" action="{{url('login')}}">
             @csrf
             {{-- メールアドレス --}}

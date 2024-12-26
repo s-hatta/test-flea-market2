@@ -42,7 +42,7 @@ class UserController extends Controller
             }
         $user->email_verified_at = new DateTime();
         $user->save();
-        return view('auth.login');
+        return view('auth.login')->with('message','送られたメール本文内のURLをクリックして登録を完了してください');
     }
     
     public function edit()

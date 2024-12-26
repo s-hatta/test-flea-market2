@@ -24,7 +24,7 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
             public function toResponse($request)
             {
-                return view('auth.verify-email');
+                return view('auth.login')->with('message','送られたメール本文内のURLをクリックして登録を完了してください');
             }
         });
     }
@@ -49,7 +49,7 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.login');
         });
         Fortify::verifyEmailView(function () {
-            return view('auth.verify-email');
+            return view('auth.login')->with('message','送られたメール本文内のURLをクリックして登録を完了してください');
         });
     }
 }
