@@ -118,8 +118,11 @@ class AddressEditTest extends TestCase
         $this->post("/purchase/address/{$this->item->id}", $this->newAddress);
 
         /* 購入処理実行 */
+        $userItem = $this->item->users()->where('user_id', $this->user->id)->first();
         $response = $this->post("/purchase/{$this->item->id}", [
-            'payment_method' => 'card'
+            'payment_method' => 'card',
+            'postal_code' => $userItem->address->postal_code,
+            'address' => $userItem->address->address,
         ]);
         $response->assertStatus(302);
 
