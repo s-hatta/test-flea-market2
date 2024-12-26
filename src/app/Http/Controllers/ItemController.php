@@ -40,7 +40,11 @@ class ItemController extends Controller
     {
         $item = new Item();
         $item->name = $request['name'];
-        $item->brand_name = $request['brand_name'];
+        if(is_null($request['brand_name'])) {
+            $item->brand_name = 'ノーブランド';
+        } else {
+            $item->brand_name = $request['brand_name'];
+        }
         $item->detail = $request['detail'];
         $item->price = $request['price'];
         $item->stock = 1;
