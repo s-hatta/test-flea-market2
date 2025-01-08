@@ -136,18 +136,14 @@ class ItemsTableSeeder extends Seeder
     
     private function copyImages()
     {
-        $destinationPath = storage_path('app/public/images/items');
-        if (!File::exists($destinationPath))
-        {
-            File::makeDirectory($destinationPath, 777, true);
-        }
-        
         $sourcePath = public_path('images/items');
         $files = File::files($sourcePath);
-        foreach ($files as $file)
-        {
-            $destinationFile = $destinationPath . '/' . $file->getFilename();
-            File::copy($file->getPathname(), $destinationFile);
+        foreach ($files as $file) {
+        Storage::disk('public')->putFileAs(
+            'images/items',
+            $file,
+            $file->getFilename()
+            );
         }
     }
 }
