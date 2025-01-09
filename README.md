@@ -76,14 +76,9 @@ $ docker compose exec php bash
 /var/www# php artisan storage:link
 ```
 
-9.  マイグレーション
+１０.  マイグレーション＆シーディング
 ```
-/var/www# php artisan migrate
-```
-
-10. シーディング
-```
-/var/www# php artisan db:seed
+/var/www# php artisan migrate:fresh --seed
 /var/www# exit
 ```
 
