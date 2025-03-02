@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Item;
 use App\Models\Category;
+use App\Models\User;
 
 class ItemsTableSeeder extends Seeder
 {
@@ -17,10 +18,12 @@ class ItemsTableSeeder extends Seeder
      */
     public function run(): void
     {
+        $seller001 = User::where('email', 'seller001@example.com')->first();
+        $seller002 = User::where('email', 'seller002@example.com')->first();
         $this->copyImages();
         $item = Item::factory()->createOne([
             'name' => '腕時計',
-            'owner_id' => 1,
+            'owner_id' => $seller001->id,
             'brand_name' => 'ノーブランド',
             'condition_id' => '1',
             'price' => 15000,
@@ -29,10 +32,10 @@ class ItemsTableSeeder extends Seeder
         ]);
         $item->categories()->attach(Category::where('content', 'ファッション')->first());
         $item->categories()->attach(Category::where('content', 'アクセサリ')->first());
-        
+
         $item = Item::factory()->createOne([
             'name' => 'HDD',
-            'owner_id' => 1,
+            'owner_id' => $seller002->id,
             'brand_name' => 'ノーブランド',
             'condition_id' => '2',
             'price' => 5000,
@@ -40,7 +43,7 @@ class ItemsTableSeeder extends Seeder
             'img_url' => '/item_002.jpg',
         ]);
         $item->categories()->attach(Category::where('content', '家電')->first());
-        
+
         $item = Item::factory()->createOne([
             'name' => '玉ねぎ3束',
             'owner_id' => 1,
@@ -51,7 +54,7 @@ class ItemsTableSeeder extends Seeder
             'img_url' => '/item_003.jpg',
         ]);
         $item->categories()->attach(Category::where('content', 'キッチン')->first());
-        
+
         $item = Item::factory()->createOne([
             'name' => '革靴',
             'owner_id' => 1,
@@ -63,7 +66,7 @@ class ItemsTableSeeder extends Seeder
         ]);
         $item->categories()->attach(Category::where('content', 'ファッション')->first());
         $item->categories()->attach(Category::where('content', 'メンズ')->first());
-        
+
         $item = Item::factory()->createOne([
             'name' => 'ノートPC',
             'owner_id' => 1,
@@ -74,10 +77,10 @@ class ItemsTableSeeder extends Seeder
             'img_url' => '/item_005.jpg',
         ]);
         $item->categories()->attach(Category::where('content', '家電')->first());
-        
+
         $item = Item::factory()->createOne([
             'name' => 'マイク',
-            'owner_id' => 1,
+            'owner_id' => $seller001->id,
             'brand_name' => 'ノーブランド',
             'condition_id' => '2',
             'price' => 8000,
@@ -85,10 +88,10 @@ class ItemsTableSeeder extends Seeder
             'img_url' => '/item_006.jpg',
         ]);
         $item->categories()->attach(Category::where('content', '家電')->first());
-        
+
         $item = Item::factory()->createOne([
             'name' => 'ショルダーバッグ',
-            'owner_id' => 1,
+            'owner_id' => $seller002->id,
             'brand_name' => 'ノーブランド',
             'condition_id' => '3',
             'price' => 3500,
@@ -97,7 +100,7 @@ class ItemsTableSeeder extends Seeder
         ]);
         $item->categories()->attach(Category::where('content', 'ファッション')->first());
         $item->categories()->attach(Category::where('content', 'レディース')->first());
-        
+
         $item = Item::factory()->createOne([
             'name' => 'タンブラー',
             'owner_id' => 1,
@@ -108,7 +111,7 @@ class ItemsTableSeeder extends Seeder
             'img_url' => '/item_008.jpg',
         ]);
         $item->categories()->attach(Category::where('content', 'キッチン')->first());
-        
+
         $item = Item::factory()->createOne([
             'name' => 'コーヒーミル',
             'owner_id' => 1,
@@ -119,7 +122,7 @@ class ItemsTableSeeder extends Seeder
             'img_url' => '/item_009.jpg',
         ]);
         $item->categories()->attach(Category::where('content', 'キッチン')->first());
-        
+
         $item = Item::factory()->createOne([
             'name' => 'メイクセット',
             'owner_id' => 1,
@@ -132,7 +135,7 @@ class ItemsTableSeeder extends Seeder
         $item->categories()->attach(Category::where('content', 'ファッション')->first());
         $item->categories()->attach(Category::where('content', 'レディース')->first());
     }
-    
+
     private function copyImages()
     {
         $sourcePath = public_path('images/items');
