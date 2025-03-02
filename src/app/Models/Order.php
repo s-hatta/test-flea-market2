@@ -11,15 +11,13 @@ class Order extends Model
         'item_id',
         'address_id',
         'price',
-        'payment_status',
-        'stripe_session_id',
     ];
-    
+
     public function item()
     {
         return $this->belongsTo(Item::class);
     }
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);

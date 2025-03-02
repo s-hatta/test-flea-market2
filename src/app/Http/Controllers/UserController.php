@@ -26,12 +26,12 @@ class UserController extends Controller
                 break;
                 
             case 'buy':
-                $items = Order::where('payment_status','paid')->where('user_id', Auth::id())->with('item')->get()->pluck('item');
+                $items = Order::where('user_id', Auth::id())->with('item')->get()->pluck('item');
                 break;
         }
         return view('mypage/profile', compact('items'));
     }
-    
+
     public function verify($request)
     {
         $id = $request;
@@ -44,11 +44,11 @@ class UserController extends Controller
         $user->save();
         return view('auth.login')->with('message','送られたメール本文内のURLをクリックして登録を完了してください');
     }
-    
+
     public function edit()
     {
         $user = Auth::user();
-        
+
          /* ユーザーに住所情報がない場合は追加する */
         if( is_null($user->address_id) ) {
             $address = Address::create([
@@ -61,12 +61,12 @@ class UserController extends Controller
             }
         return view('mypage/profile_edit', compact('user'));
     }
-    
+
     public function update(ProfileRequest $request)
     {
         $user = Auth::user();
         $user->name = $request->input('name');
-        
+
         if ($user->address_id)
         {
             $address = $user->address;
@@ -83,7 +83,7 @@ class UserController extends Controller
             ]);
             $user->address_id = $address->id;
         }
-        
+
         if ($request->hasFile('profile_image'))
         {
             $file = $request->file('profile_image');
