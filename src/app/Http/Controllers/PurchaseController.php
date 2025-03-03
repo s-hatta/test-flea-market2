@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Models\Address;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Transaction;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\PurchaseRequest;
 
@@ -44,6 +45,14 @@ class PurchaseController extends Controller
         $order->price = $item->price;
         $order->address_id = $address->id;
         $order->save();
+
+        /* 取引データ作成 */
+        $transaction = new Transaction();
+        $transaction->item_id = $item->id;
+        $transaction->seller_id = $item->owner_id;
+        $transaction->buyer_id = $user->id;
+        $transaction->status = Transaction::STATUS_IN_PROGRESS;
+        $transaction->save();
 
         return redirect('/');
     }
