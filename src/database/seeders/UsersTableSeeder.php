@@ -26,12 +26,12 @@ class UsersTableSeeder extends Seeder
             'password' => 'password',
         ]);
         User::factory()->create([
-            'name' => 'Selelr002',
+            'name' => 'Seller002',
             'email' => 'seller002@example.com',
             'password' => 'password',
         ]);
         User::factory()->create([
-            'name' => 'Selelr003',
+            'name' => 'Seller003',
             'email' => 'seller003@example.com',
             'password' => 'password',
         ]);
