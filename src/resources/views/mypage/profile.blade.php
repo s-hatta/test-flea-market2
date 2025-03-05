@@ -34,7 +34,12 @@
             取引中
         </button>
     </div>
-    {{--商品一覧--}}
-    @include('parts.items', ['items' => $items])
+    @if( isset($transactions) )
+        {{--取引中の商品一覧--}}
+        @include('parts.transaction_items', ['transactions' => $transactions])
+    @else
+        {{--商品一覧--}}
+        @include('parts.items', ['items' => $items])
+    @endif
 </div>
 @endsection
