@@ -24,11 +24,14 @@
     </div>
     {{--表示切替用のタブ--}}
     <div class="profile-tabs">
-        <button class="tab-button {{ request()->query('tab') !== 'buy' ? 'active' : '' }}" type="button" onclick="location.href='{{ url('/mypage/?tab=sell') }}'">
+        <button class="tab-button {{ request()->query('tab') === 'sell' || !request()->query('tab') ? 'active' : '' }}" type="button" onclick="location.href='{{ url('/mypage/?tab=sell') }}'">
             出品した商品
         </button>
         <button class="tab-button {{ request()->query('tab') === 'buy' ? 'active' : '' }}" type="button" onclick="location.href='{{ url('/mypage/?tab=buy') }}'">
             購入した商品
+        </button>
+        <button class="tab-button {{ request()->query('tab') === 'transaction' ? 'active' : '' }}" type="button" onclick="location.href='{{ url('/mypage/?tab=transaction') }}'">
+            取引中
         </button>
     </div>
     {{--商品一覧--}}
