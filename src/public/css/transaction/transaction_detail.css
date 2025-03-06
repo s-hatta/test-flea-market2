@@ -38,7 +38,9 @@
 }
 
 .main-content {
-    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 /*=============================================================================
@@ -129,15 +131,69 @@
 ==============================================================================*/
 .messages {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
     padding: 20px;
-    flex-wrap: wrap;
+    flex: 1;
+    overflow-y: auto;
 }
 
 .message-wrapper {
     display: flex;
     width: 100%;
+    margin-bottom: 20px;
+}
+
+/* 右側（自分のメッセージ） */
+.message-right {
+    justify-content: flex-end;
+}
+
+.message-right-container {
+    max-width: 70%;
+}
+
+/* 左側（相手のメッセージ） */
+.message-left {
+    justify-content: flex-start;
+}
+
+.message-left-container {
+    max-width: 70%;
+}
+
+/* メッセージ情報 */
+.user-info-left,
+.user-info-right {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-info-left {
+    justify-content: flex-start;
+}
+
+.user-info-right {
+    justify-content: flex-end;
+}
+
+.message-name {
+    font-weight: bold;
+}
+
+.user-info-left .message-name {
+    margin-left: 10px;
+}
+
+.user-info-right .message-name {
+    margin-right: 10px;
+    order: -1; /* 名前を画像の前に表示 */
+}
+
+.message-actions {
+    display: flex;
+    margin-top: 8px;
+    justify-content: flex-end;
 }
 
 .message-image-wrapper {
@@ -145,7 +201,9 @@
     height: 60px;
     border-radius: 50%;
     overflow: hidden;
+    flex-shrink: 0;
 }
+
 .message-image {
     width: 100%;
     height: 100%;
@@ -159,6 +217,20 @@
     background: #d9d9d9;
 }
 
+.message-content {
+    background-color: #d9d9d9;
+    padding: 15px;
+    border-radius: 4px;
+    position: relative;
+}
+
+.message-image-content {
+    max-width: 100%;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* 編集・削除ボタン */
 .edit-message-btn,
 .delete-message-btn {
     background: none;
@@ -175,10 +247,6 @@
     メッセージ入力欄
 ==============================================================================*/
 .message-input {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
     padding: 20px;
 }
 
@@ -204,13 +272,16 @@
 }
 
 .preview-image {
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     max-width: 500px;
     margin: 0 auto;
 }
 
 #preview-image {
-    border: solid 1px black;
+    max-width: 100%;
+    border: solid 1px #ddd;
+    border-radius: 5px;
+    display: none;
 }
 
 .alert-error {
@@ -236,6 +307,7 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .rating-modal-content {
@@ -312,25 +384,31 @@
 }
 
 /*=============================================================================
-    メッセージ編集モーダル
+    メッセージ編集フォーム
 ==============================================================================*/
+.edit-form {
+    margin-top: 10px;
+    width: 100%;
+}
+
 .edit-textarea {
     width: 100%;
-    padding: 8px;
-    border-radius: 4px;
+    padding: 12px;
+    border-radius: 5px;
     margin-bottom: 10px;
+    resize: vertical;
 }
 
 .edit-actions {
     display: flex;
     gap: 10px;
-    margin-top: 10px;
+    justify-content: flex-end;
 }
 
 .update-btn,
 .cancel-btn {
-    padding: 5px 15px;
-    border-radius: 4px;
+    padding: 8px 15px;
+    border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
 }
@@ -344,4 +422,95 @@
 .cancel-btn {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
+}
+
+/*=============================================================================
+    レスポンシブデザイン
+==============================================================================*/
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .sidebar-title {
+        font-size: 24px;
+    }
+
+    .sidebar-transaction {
+        margin: 20px 15px;
+        font-size: 18px;
+    }
+
+    .chat-title {
+        font-size: 24px;
+    }
+
+    .item-name {
+        font-size: 36px;
+    }
+
+    .item-price {
+        font-size: 24px;
+    }
+
+    .message-right-container,
+    .message-left-container {
+        max-width: 80%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 10px 0;
+    }
+
+    .sidebar-transaction {
+        margin: 10px 15px;
+    }
+
+    .chat-header {
+        padding: 10px;
+    }
+
+    .user-image-wrapper {
+        width: 50px;
+        height: 50px;
+    }
+
+    .chat-title {
+        font-size: 18px;
+    }
+
+    .complete-btn {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+
+    .item-image-wrapper {
+        width: 100px;
+        height: 100px;
+    }
+
+    .item-name {
+        font-size: 24px;
+    }
+
+    .item-price {
+        font-size: 18px;
+    }
+
+    .message-right-container,
+    .message-left-container {
+        max-width: 90%;
+    }
+
+    .message-image-wrapper {
+        width: 40px;
+        height: 40px;
+    }
 }
