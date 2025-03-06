@@ -142,6 +142,11 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const input = document.getElementById('item_image-input');
+    const messageInput = document.getElementById('input-content');
+
+    /* URLから取引IDを取得 */
+    const transactionId = window.location.pathname.split('/').pop();
+
     let previewImage = document.getElementById('preview-image');
 
     input.addEventListener('change', function(e) {
@@ -154,6 +159,27 @@ document.addEventListener('DOMContentLoaded', function() {
             reader.readAsDataURL(file);
         }
     });
+
+    /* ローカルストレージから保存されたメッセージを読み込む */
+    if (messageInput) {
+        const savedMessage = localStorage.getItem(`transaction_message_${transactionId}`);
+        if (savedMessage) {
+            messageInput.value = savedMessage;
+        }
+
+        /* 入力内容の変更を監視して保存 */
+        messageInput.addEventListener('input', function() {
+            localStorage.setItem(`transaction_message_${transactionId}`, this.value);
+        });
+    }
+
+    /* フォーム送信時にローカルストレージをクリア */
+    const messageForm = document.querySelector('.input-form');
+    if (messageForm) {
+        messageForm.addEventListener('submit', function() {
+            localStorage.removeItem(`transaction_message_${transactionId}`);
+        });
+    }
 
     /* 取引完了モーダル */
     const ratingModal = document.getElementById('rating-modal');
