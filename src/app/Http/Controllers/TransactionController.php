@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Message;
 use App\Models\Rating;
 use App\Http\Requests\MessageRequest;
+use App\Mail\TransactionCompletedMail;
 
 class TransactionController extends Controller
 {
@@ -75,6 +77,11 @@ class TransactionController extends Controller
         }
 
         $transaction->complete();
+
+        /* 出品者にメールを送信 */
+        $seller = User::findOrFail($transaction->seller_id);
+        Mail::to($seller->email)->send(new TransactionCompletedMail($transaction, $user));
+
         return redirect()->to('/transaction/' . $id);
     }
 
