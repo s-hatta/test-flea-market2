@@ -7,6 +7,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\TransactionController;
 
 Route::middleware('guest')->group(function () {
     Route::get('register',[RegisterController::class,'create']);
@@ -30,5 +31,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/mypage', [UserController::class, 'index']);
     Route::get('/mypage/profile', [UserController::class, 'edit']);
     Route::post('/mypage/profile', [UserController::class, 'update'])->name('profile.update');
+    Route::get('/transaction/{id}', [TransactionController::class, 'show']);
+    Route::post('/transaction/{id}/message', [TransactionController::class, 'store']);
 });
 Route::get('/email/verify/{id}/{hash}', [UserController::class, 'verify'])->name('verification.verify');
