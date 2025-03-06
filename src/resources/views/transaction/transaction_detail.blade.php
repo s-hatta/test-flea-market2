@@ -82,6 +82,13 @@
 
         {{--メッセージ入力欄--}}
         <div class="message-input">
+            @if ($errors->any())
+                <div class="alert-error">
+                    @foreach ($errors->all() as $error)
+                        {{ $error }}
+                    @endforeach
+                </div>
+            @endif
             <form class="input-form" action="{{ url('/transaction/' . $transaction->id . '/message') }}" method="POST">
                 @csrf
                 <textarea class="input-content" name="content" id="input-content" placeholder="取引メッセージを記入してください" rows="2">{{ old('content') }}</textarea>
