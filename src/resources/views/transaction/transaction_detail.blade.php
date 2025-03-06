@@ -55,16 +55,8 @@
                     {{-- 送信メッセージ（右側表示） --}}
                     <div class="message-wrapper message-right" id="message-{{ $message->id }}">
                         <div class="message-right-container">
-                            <div class="message-info">
-                                <div class="message-name">{{ $message->user->name }}</div>
-                            </div>
-                            <div class="message-content-container">
-                                <div class="message-content">
-                                    @if($message->image_url)
-                                        <img src="{{ asset('storage/images/messages/' . $message->image_url) }}" class="message-image-content">
-                                    @endif
-                                    <span class="message-text">{{ $message->content }}</span>
-                                </div>
+                            <div class="user-info-right">
+                                <span class="message-name">{{ $message->user->name }}</span>
                                 <div class="message-image-wrapper">
                                     @if($message->user->img_url)
                                         <img src="{{ asset('storage/images/users/' . $message->user->img_url) }}" class="message-image">
@@ -72,6 +64,12 @@
                                         <div class="message-image__placeholder"></div>
                                     @endif
                                 </div>
+                            </div>
+                            <div class="message-content">
+                                @if($message->image_url)
+                                    <img src="{{ asset('storage/images/messages/' . $message->image_url) }}" class="message-image-content">
+                                @endif
+                                <span class="message-text">{{ $message->content }}</span>
                             </div>
                             <div class="message-actions">
                                 <button type="button" class="edit-message-btn" onclick="showEditForm('{{ $message->id }}')">編集</button>
@@ -100,10 +98,7 @@
                     {{-- 受信メッセージ（左側表示） --}}
                     <div class="message-wrapper message-left" id="message-{{ $message->id }}">
                         <div class="message-left-container">
-                            <div class="message-info">
-                                <div class="message-name">{{ $message->user->name }}</div>
-                            </div>
-                            <div class="message-content-container">
+                            <div class="user-info-left">
                                 <div class="message-image-wrapper">
                                     @if($message->user->img_url)
                                         <img src="{{ asset('storage/images/users/' . $message->user->img_url) }}" class="message-image">
@@ -111,12 +106,13 @@
                                         <div class="message-image__placeholder"></div>
                                     @endif
                                 </div>
-                                <div class="message-content">
-                                    @if($message->image_url)
-                                        <img src="{{ asset('storage/images/messages/' . $message->image_url) }}" class="message-image-content">
-                                    @endif
-                                    <span class="message-text">{{ $message->content }}</span>
-                                </div>
+                                <span class="message-name">{{ $message->user->name }}</span>
+                            </div>
+                            <div class="message-content">
+                                @if($message->image_url)
+                                    <img src="{{ asset('storage/images/messages/' . $message->image_url) }}" class="message-image-content">
+                                @endif
+                                <span class="message-text">{{ $message->content }}</span>
                             </div>
                         </div>
                     </div>
@@ -263,16 +259,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* 編集フォーム表示 */
 function showEditForm(messageId) {
-    document.querySelector(`#message-${messageId} .message-content-container`).style.display = 'none';
-    document.querySelector(`#message-${messageId} .message-info`).style.display = 'none';
+    document.querySelector(`#message-${messageId} .user-info-right`).style.display = 'none';
+    document.querySelector(`#message-${messageId} .message-content`).style.display = 'none';
     document.querySelector(`#message-${messageId} .message-actions`).style.display = 'none';
     document.getElementById(`edit-form-${messageId}`).style.display = 'block';
 }
 
 /* 編集フォーム非表示 */
 function hideEditForm(messageId) {
-    document.querySelector(`#message-${messageId} .message-content-container`).style.display = 'flex';
-    document.querySelector(`#message-${messageId} .message-info`).style.display = 'flex';
+    document.querySelector(`#message-${messageId} .user-info-right`).style.display = 'flex';
+    document.querySelector(`#message-${messageId} .message-content`).style.display = 'block';
     document.querySelector(`#message-${messageId} .message-actions`).style.display = 'flex';
     document.getElementById(`edit-form-${messageId}`).style.display = 'none';
 }

@@ -162,36 +162,38 @@
 }
 
 /* メッセージ情報 */
-.message-info {
+.user-info-left,
+.user-info-right {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.user-info-left {
+    justify-content: flex-start;
+}
+
+.user-info-right {
+    justify-content: flex-end;
 }
 
 .message-name {
     font-weight: bold;
+}
+
+.user-info-left .message-name {
+    margin-left: 10px;
+}
+
+.user-info-right .message-name {
     margin-right: 10px;
+    order: -1; /* 名前を画像の前に表示 */
 }
 
 .message-actions {
     display: flex;
-    margin-top: 5px;
+    margin-top: 8px;
     justify-content: flex-end;
-}
-
-/* メッセージコンテンツ */
-.message-content-container {
-    display: flex;
-    align-items: flex-start;
-}
-
-.message-right .message-content-container {
-    flex-direction: row-reverse;
-}
-
-.message-left .message-content-container {
-    flex-direction: row;
 }
 
 .message-image-wrapper {
@@ -200,14 +202,6 @@
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
-}
-
-.message-right .message-image-wrapper {
-    margin-left: 10px;
-}
-
-.message-left .message-image-wrapper {
-    margin-right: 10px;
 }
 
 .message-image {
@@ -254,7 +248,6 @@
 ==============================================================================*/
 .message-input {
     padding: 20px;
-    border-top: 1px solid #ddd;
 }
 
 .input-form {
@@ -402,7 +395,6 @@
     width: 100%;
     padding: 12px;
     border-radius: 5px;
-    border: 1px solid #ddd;
     margin-bottom: 10px;
     resize: vertical;
 }
