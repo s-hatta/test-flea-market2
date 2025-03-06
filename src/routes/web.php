@@ -33,6 +33,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::post('/mypage/profile', [UserController::class, 'update'])->name('profile.update');
     Route::get('/transaction/{id}', [TransactionController::class, 'show']);
     Route::post('/transaction/{id}/message', [TransactionController::class, 'store']);
+    Route::put('/transaction/{id}/message/{messageId}', [TransactionController::class, 'update'])->name('transaction.message.update');
     Route::delete('/transaction/{id}/message/{messageId}', [TransactionController::class, 'delete'])->name('transaction.message.delete');
     Route::post('/transaction/{id}/complete', [TransactionController::class, 'complete'])->name('transaction.complete');
     Route::post('/transaction/{id}/rate', [TransactionController::class, 'submitRating'])->name('transaction.rate');

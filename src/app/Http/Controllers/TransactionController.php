@@ -64,6 +64,25 @@ class TransactionController extends Controller
         return redirect()->to('/transaction/' . $id);
     }
 
+    public function update(MessageRequest $request, $id, $messageId)
+    {
+        $user = Auth::user();
+        $message = Message::findOrFail($messageId);
+
+        if( $message->user_id !== $user->id ) {
+            abort(403);
+        }
+        if( $message->transaction_id != $id ) {
+            abort(404);
+        }
+
+        /* メッセージ内容更新 */
+        $message->content = $request->content;
+        $message->save();
+
+        return redirect()->to('/transaction/' . $id);
+    }
+
     public function delete(Request $request, $id, $messageId)
     {
         $user = Auth::user();
