@@ -64,6 +64,27 @@ class TransactionController extends Controller
         return redirect()->to('/transaction/' . $id);
     }
 
+    public function delete(Request $request, $id, $messageId)
+    {
+        $user = Auth::user();
+        $message = Message::findOrFail($messageId);
+
+        if ($message->user_id !== $user->id) {
+            abort(403);
+        }
+        if ($message->transaction_id != $id) {
+            abort(404);
+        }
+
+        /* 削除実行 */
+        if ($message->image_url) {
+            Storage::disk('public')->delete('images/messages/' . $message->image_url);
+        }
+        $message->delete();
+
+        return redirect()->to('/transaction/' . $id);
+    }
+
     public function complete($id)
     {
         $user = Auth::user();
