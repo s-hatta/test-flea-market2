@@ -51,60 +51,76 @@
         {{--送受信メッセージ--}}
         <div class="messages">
             @foreach($messages as $message)
-                <div class="message-wrapper" id="message-{{ $message->id }}">
-                    @if( $message->user->id===Auth::id() )
-                        {{--送信メッセージ--}}
-                        <div class="message-name">{{ $message->user->name }}</div>
-                        <div class="message-image-wrapper">
-                            @if($message->user->img_url)
-                                <img src="{{ Storage::url('public/images/user/' . $message->user->img_url) }}" class="message-image">
-                            @else
-                                <div class="message-image__placeholder"></div>
-                            @endif
-                        </div>
-                        <div class="message-content">
-                            @if($message->image_url)
-                                <img src="{{ asset('storage/images/messages/' . $message->image_url) }}">
-                            @endif
-                            <span class="message-text">{{ $message->content }}</span>
-                        </div>
-                        <button type="button" class="edit-message-btn" onclick="showEditForm('{{ $message->id }}')">編集</button>
-                        <form method="POST" action="{{ route('transaction.message.delete', ['id' => $transaction->id, 'messageId' => $message->id]) }}" onsubmit="return confirm('このメッセージを削除してもよろしいですか？');" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="delete-message-btn">削除</button>
-                        </form>
-
-                        {{--編集フォーム--}}
-                        <div class="edit-form" id="edit-form-{{ $message->id }}" style="display: none; width: 100%; margin-top: 10px;">
-                            <form method="POST" action="{{ route('transaction.message.update', ['id' => $transaction->id, 'messageId' => $message->id]) }}" enctype="multipart/form-data">
-                                @csrf
-                                @method('PUT')
-                                <textarea name="content" class="edit-textarea" rows="3">{{ $message->content }}</textarea>
-                                <div class="edit-actions">
-                                    <button type="submit" class="update-btn">更新</button>
-                                    <button type="button" class="cancel-btn" onclick="hideEditForm('{{ $message->id }}')">キャンセル</button>
+                @if($message->user->id === Auth::id())
+                    {{-- 送信メッセージ（右側表示） --}}
+                    <div class="message-wrapper message-right" id="message-{{ $message->id }}">
+                        <div class="message-right-container">
+                            <div class="message-info">
+                                <div class="message-name">{{ $message->user->name }}</div>
+                            </div>
+                            <div class="message-content-container">
+                                <div class="message-content">
+                                    @if($message->image_url)
+                                        <img src="{{ asset('storage/images/messages/' . $message->image_url) }}" class="message-image-content">
+                                    @endif
+                                    <span class="message-text">{{ $message->content }}</span>
                                 </div>
-                            </form>
+                                <div class="message-image-wrapper">
+                                    @if($message->user->img_url)
+                                        <img src="{{ asset('storage/images/users/' . $message->user->img_url) }}" class="message-image">
+                                    @else
+                                        <div class="message-image__placeholder"></div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="message-actions">
+                                <button type="button" class="edit-message-btn" onclick="showEditForm('{{ $message->id }}')">編集</button>
+                                <form method="POST" action="{{ route('transaction.message.delete', ['id' => $transaction->id, 'messageId' => $message->id]) }}" onsubmit="return confirm('このメッセージを削除してもよろしいですか？');" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="delete-message-btn">削除</button>
+                                </form>
+                            </div>
+
+                            {{--編集フォーム--}}
+                            <div class="edit-form" id="edit-form-{{ $message->id }}" style="display: none;">
+                                <form method="POST" action="{{ route('transaction.message.update', ['id' => $transaction->id, 'messageId' => $message->id]) }}" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')
+                                    <textarea name="content" class="edit-textarea" rows="3">{{ $message->content }}</textarea>
+                                    <div class="edit-actions">
+                                        <button type="submit" class="update-btn">更新</button>
+                                        <button type="button" class="cancel-btn" onclick="hideEditForm('{{ $message->id }}')">キャンセル</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    @else
-                        {{--受信メッセージ--}}
-                        <div class="message-image-wrapper">
-                            @if($message->user->img_url)
-                                <img src="{{ Storage::url('public/images/user/' . $message->user->img_url) }}" class="message-image">
-                            @else
-                                <div class="message-image__placeholder"></div>
-                            @endif
+                    </div>
+                @else
+                    {{-- 受信メッセージ（左側表示） --}}
+                    <div class="message-wrapper message-left" id="message-{{ $message->id }}">
+                        <div class="message-left-container">
+                            <div class="message-info">
+                                <div class="message-name">{{ $message->user->name }}</div>
+                            </div>
+                            <div class="message-content-container">
+                                <div class="message-image-wrapper">
+                                    @if($message->user->img_url)
+                                        <img src="{{ asset('storage/images/users/' . $message->user->img_url) }}" class="message-image">
+                                    @else
+                                        <div class="message-image__placeholder"></div>
+                                    @endif
+                                </div>
+                                <div class="message-content">
+                                    @if($message->image_url)
+                                        <img src="{{ asset('storage/images/messages/' . $message->image_url) }}" class="message-image-content">
+                                    @endif
+                                    <span class="message-text">{{ $message->content }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="message-name">{{ $message->user->name }}</div>
-                        <div class="message-content">
-                            @if($message->image_url)
-                                <img src="{{ asset('storage/images/messages/' . $message->image_url) }}">
-                            @endif
-                            {{ $message->content }}
-                        </div>
-                    @endif
-                </div>
+                    </div>
+                @endif
             @endforeach
         </div>
 
@@ -182,6 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const reader = new FileReader();
             reader.onload = function(e) {
                 previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
             }
             reader.readAsDataURL(file);
         }
@@ -246,18 +263,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* 編集フォーム表示 */
 function showEditForm(messageId) {
-    document.querySelector(`#message-${messageId} .message-content`).style.visibility = 'hidden';
-    document.querySelector(`#message-${messageId} .edit-message-btn`).style.display = 'none';
-    document.querySelector(`#message-${messageId} .delete-message-btn`).style.display = 'none';
+    document.querySelector(`#message-${messageId} .message-content-container`).style.display = 'none';
+    document.querySelector(`#message-${messageId} .message-info`).style.display = 'none';
+    document.querySelector(`#message-${messageId} .message-actions`).style.display = 'none';
     document.getElementById(`edit-form-${messageId}`).style.display = 'block';
 }
 
 /* 編集フォーム非表示 */
 function hideEditForm(messageId) {
-    document.querySelector(`#message-${messageId} .message-content`).style.visibility = 'visible';
-    document.querySelector(`#message-${messageId} .edit-message-btn`).style.display = 'inline';
-    document.querySelector(`#message-${messageId} .delete-message-btn`).style.display = 'inline';
-
+    document.querySelector(`#message-${messageId} .message-content-container`).style.display = 'flex';
+    document.querySelector(`#message-${messageId} .message-info`).style.display = 'flex';
+    document.querySelector(`#message-${messageId} .message-actions`).style.display = 'flex';
     document.getElementById(`edit-form-${messageId}`).style.display = 'none';
 }
 </script>
