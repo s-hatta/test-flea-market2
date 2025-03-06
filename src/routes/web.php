@@ -34,5 +34,6 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/transaction/{id}', [TransactionController::class, 'show']);
     Route::post('/transaction/{id}/message', [TransactionController::class, 'store']);
     Route::post('/transaction/{id}/complete', [TransactionController::class, 'complete'])->name('transaction.complete');
+    Route::post('/transaction/{id}/rate', [TransactionController::class, 'submitRating'])->name('transaction.rate');
 });
 Route::get('/email/verify/{id}/{hash}', [UserController::class, 'verify'])->name('verification.verify');
