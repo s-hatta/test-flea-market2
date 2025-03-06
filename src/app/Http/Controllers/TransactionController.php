@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Message;
+use App\Models\Rating;
 use App\Http\Requests\MessageRequest;
 
 class TransactionController extends Controller
@@ -15,6 +16,7 @@ class TransactionController extends Controller
     {
         $user = Auth::user();
         $transaction = Transaction::findOrFail($id);
+        $hasRated = Rating::hasUserRated($id, $user->id);
         if( $transaction->seller_id !== $user->id && $transaction->buyer_id !== $user->id ) {
             abort(404);
         }
@@ -32,6 +34,7 @@ class TransactionController extends Controller
             'otherTransactions',
             'otherUser',
             'messages',
+            'hasRated'
         ));
     }
 
@@ -73,5 +76,38 @@ class TransactionController extends Controller
 
         $transaction->complete();
         return redirect()->to('/transaction/' . $id);
+    }
+
+    public function submitRating(Request $request, $id)
+    {
+        $user = Auth::user();
+        $transaction = Transaction::findOrFail($id);
+
+        if ($transaction->seller_id !== $user->id && $transaction->buyer_id !== $user->id) {
+            abort(404);
+        }
+
+        /* 取引完了していなければ戻る */
+        if (!$transaction->isCompleted()) {
+            return redirect()->to('/transaction/' . $id);
+        }
+
+        /* 評価完了していれば商品一覧へ */
+        if (Rating::hasUserRated($id, $user->id)) {
+            return redirect('/mypage?tab=transaction');
+        }
+
+        $ratedUserId = ($user->id === $transaction->seller_id)
+            ? $transaction->buyer_id
+            : $transaction->seller_id;
+
+        /* 評価情報保存 */
+        $rating = new Rating();
+        $rating->transaction_id = $id;
+        $rating->rater_id = $user->id;
+        $rating->rated_user_id = $ratedUserId;
+        $rating->score = $request->score;
+        $rating->save();
+        return redirect('/mypage?tab=transaction');
     }
 }
