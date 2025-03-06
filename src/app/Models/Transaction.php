@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Transaction extends Model
 {
@@ -104,5 +105,26 @@ class Transaction extends Model
         return ($this->seller_id === $userId)
             ? $this->buyer
             : $this->seller;
+    }
+
+    /**
+     * ユーザーが保持している未完了の取引を取得する
+     */
+    public static function getOtherIncompleteTransactions(int $userId, int $transactionId)
+    {
+        return Transaction::where(function($query) use($userId) {
+            $query->where('seller_id', $userId)
+                ->orWhere('buyer_id', $userId);
+        })
+        ->where('id', '!=', $transactionId)
+        ->where(function($query) use($userId) {
+            $query->where('status', Transaction::STATUS_IN_PROGRESS)
+                ->orWhere(function($q) use($userId) {
+                    $q->where('status', Transaction::STATUS_COMPLETED)
+                        ->whereDoesntHave('ratings', function($rating) use($userId) {
+                            $rating->where('rater_id', $userId);
+                        });
+                });
+        })->orderBy('updated_at', 'desc')->get();
     }
 }
