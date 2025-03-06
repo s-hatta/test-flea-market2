@@ -62,7 +62,12 @@
                                 <div class="message-image__placeholder"></div>
                             @endif
                         </div>
-                        <div class="message-content">{{ $message->content }}</div>
+                        <div class="message-content">
+                            @if($message->image_url)
+                                <img src="{{ asset('storage/images/messages/' . $message->image_url) }}">
+                            @endif
+                            {{ $message->content }}
+                        </div>
                         編集
                         削除
                     @else
@@ -75,7 +80,12 @@
                             @endif
                         </div>
                         <div class="message-name">{{ $message->user->name }}</div>
-                        <div class="message-content">{{ $message->content }}</div>
+                        <div class="message-content">
+                            @if($message->image_url)
+                                <img src="{{ asset('storage/images/messages/' . $message->image_url) }}">
+                            @endif
+                            {{ $message->content }}
+                        </div>
                     @endif
                 </div>
             @endforeach
@@ -90,7 +100,7 @@
                     @endforeach
                 </div>
             @endif
-            <form class="input-form" action="{{ url('/transaction/' . $transaction->id . '/message') }}" method="POST">
+            <form class="input-form" action="{{ url('/transaction/' . $transaction->id . '/message') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <textarea class="input-content" name="content" id="input-content" placeholder="取引メッセージを記入してください" rows="2">{{ old('content') }}</textarea>
                 <label class="select-image">
