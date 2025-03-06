@@ -24,28 +24,28 @@ class AddressEditTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         /* 変更前の住所 */
         $this->currentAddress = [
             'postal_code' => '987-6543',
             'address' => '大阪府大阪市2-2',
             'building' => 'サンプルマンション202'
         ];
-        
+
         /* 変更後の住所 */
         $this->newAddress = [
             'postal_code' => '987-6543',
             'address' => '大阪府大阪市2-2',
             'building' => 'サンプルマンション202'
         ];
-        
+
         /* ユーザー情報 */
         $this->address = new Address($this->currentAddress);
         $this->address->save();
         $this->user = User::factory()->create([
             'address_id' => $this->address->id
         ]);
-        
+
         /* テスト用の商品情報 */
         $this->seed(\Database\Seeders\ConditionsTableSeeder::class);
         $condition = Condition::first();
@@ -58,9 +58,9 @@ class AddressEditTest extends TestCase
 
     /*
         1. ユーザーにログインする
-        2. 送付先住所変更画面で住所を登録する 
+        2. 送付先住所変更画面で住所を登録する
         3. 商品購入画面を再度開く
-        
+
         登録した住所が商品購入画面に正しく反映される
     */
     public function test_address_edit_001()
@@ -73,17 +73,17 @@ class AddressEditTest extends TestCase
         $response->assertSee($this->currentAddress['postal_code']);
         $response->assertSee($this->currentAddress['address']);
         $response->assertSee($this->currentAddress['building']);
-        
+
         /* 送付先住所変更画面で変更前の住所が表示されているか */
         $response = $this->get("/purchase/address/{$this->item->id}");
         $response->assertStatus(200);
         $response->assertSee($this->currentAddress['postal_code']);
         $response->assertSee($this->currentAddress['address']);
         $response->assertSee($this->currentAddress['building']);
-        
+
         /* 住所を変更 */
         $response = $this->post("/purchase/address/{$this->item->id}", $this->newAddress);
-        
+
         /* 商品購入画面を再び開くと変更後の住所になっているか */
         $response = $this->get("/purchase/{$this->item->id}");
         $response->assertStatus(200);
@@ -94,21 +94,13 @@ class AddressEditTest extends TestCase
 
     /*
         1. ユーザーにログインする
-        2. 送付先住所変更画面で住所を登録する 
+        2. 送付先住所変更画面で住所を登録する
         3. 商品を購入する
-        
+
         正しく送付先住所が紐づいている
     */
     public function test_address_edit_002()
     {
-        $mockStripeService = Mockery::mock(StripePaymentService::class);
-        $mockStripeService->shouldReceive('createCheckoutSession')
-            ->andReturn((object)[
-                'id' => 'test_session_id',
-                'url' => 'http://example.com/checkout'
-            ]);
-        $this->app->instance(StripePaymentService::class, $mockStripeService);
-
         /* 住所を変更して商品を購入 */
         $this->actingAs($this->user);
         $response = $this->get("/purchase/{$this->item->id}");
@@ -131,18 +123,12 @@ class AddressEditTest extends TestCase
             ->where('item_id', $this->item->id)
             ->first();
         $this->assertNotNull($order, 'Order not found');
-        
+
         /* 注文情報の住所が変更後住所と紐づいているか */
         $orderAddress = Address::find($order->address_id);
         $this->assertNotNull($orderAddress);
         $this->assertEquals($this->newAddress['postal_code'], $orderAddress->postal_code);
         $this->assertEquals($this->newAddress['address'], $orderAddress->address);
         $this->assertEquals($this->newAddress['building'], $orderAddress->building);
-    }
-
-    protected function tearDown(): void
-    {
-        Mockery::close();
-        parent::tearDown();
     }
 }
