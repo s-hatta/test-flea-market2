@@ -33,5 +33,6 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::post('/mypage/profile', [UserController::class, 'update'])->name('profile.update');
     Route::get('/transaction/{id}', [TransactionController::class, 'show']);
     Route::post('/transaction/{id}/message', [TransactionController::class, 'store']);
+    Route::post('/transaction/{id}/complete', [TransactionController::class, 'complete'])->name('transaction.complete');
 });
 Route::get('/email/verify/{id}/{hash}', [UserController::class, 'verify'])->name('verification.verify');
