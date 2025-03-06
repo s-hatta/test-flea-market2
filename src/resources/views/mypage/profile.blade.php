@@ -18,7 +18,23 @@
             @endif
         </div>
         {{--ユーザー名--}}
-        <h2 class="profile-name">{{ Auth::user()->name }}</h2>
+        <div class="profile-info">
+            <h2 class="profile-name">{{ Auth::user()->name }}</h2>
+
+            {{-- 評価平均 --}}
+            @if($averageRating > 0)
+            <div class="rating-stars">
+                @for($i = 1; $i <= 5; $i++)
+                    @if($i <= round($averageRating))
+                        <img src="{{ asset('images/icons/icon_star_fill.svg') }}" alt="★" class="rating-star">
+                    @else
+                        <img src="{{ asset('images/icons/icon_star_empty.svg') }}" alt="☆" class="rating-star">
+                    @endif
+                @endfor
+            </div>
+            @endif
+        </div>
+
         {{--プロフィール編集ボタン--}}
         <a href="{{ url('/mypage/profile') }}" class="edit-profile-button">プロフィールを編集</a>
     </div>

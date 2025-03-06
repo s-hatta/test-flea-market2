@@ -24,6 +24,7 @@ class UserController extends Controller
         $transactions = null;
         $tab = $request->query('tab');
         $unreadCount = Message::getTotalUnreadCount($user->id);
+        $averageRating = Rating::getUserAverageRating($user->id);
         switch($tab) {
             case 'sell':
             default:
@@ -48,9 +49,9 @@ class UserController extends Controller
                                 });
                         });
                 })->orderBy('updated_at', 'desc')->get();
-                return view('mypage/profile', compact('transactions','unreadCount'));
+                return view('mypage/profile', compact('transactions','unreadCount','averageRating'));
         }
-        return view('mypage/profile', compact('items','unreadCount'));
+        return view('mypage/profile', compact('items','unreadCount','averageRating'));
     }
 
     public function verify($request)
