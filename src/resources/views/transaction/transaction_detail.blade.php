@@ -69,7 +69,11 @@
                             {{ $message->content }}
                         </div>
                         編集
-                        削除
+                        <form method="POST" action="{{ route('transaction.message.delete', ['id' => $transaction->id, 'messageId' => $message->id]) }}" onsubmit="return confirm('このメッセージを削除してもよろしいですか？');" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="delete-message-btn">削除</button>
+                        </form>
                     @else
                         {{--受信メッセージ--}}
                         <div class="message-image-wrapper">
