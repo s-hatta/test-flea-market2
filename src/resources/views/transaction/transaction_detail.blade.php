@@ -30,7 +30,8 @@
             </div>
             <div class="chat-title">{{$otherUser->name}}さんとの取引画面</div>
             @if( Auth::id() === $transaction->buyer_id )
-                <form>
+                <form action="{{ url('/transaction/' . $transaction->id . '/complete') }}" method="POST" onsubmit="return confirm('この取引を完了しますか？');">
+                    @csrf
                     <button type="submit" class="complete-btn">取引を完了する</button>
                 </form>
             @endif
@@ -85,7 +86,7 @@
             @if ($errors->any())
                 <div class="alert-error">
                     @foreach ($errors->all() as $error)
-                        {{ $error }}
+                        <ul>{{ $error }}</ul>
                     @endforeach
                 </div>
             @endif

@@ -57,4 +57,21 @@ class TransactionController extends Controller
         $transaction->touch();
         return redirect()->to('/transaction/' . $id);
     }
+
+    public function complete($id)
+    {
+        $user = Auth::user();
+        $transaction = Transaction::findOrFail($id);
+
+        if ($transaction->buyer_id !== $user->id) {
+            return abort(404);
+        }
+
+        if ($transaction->isCompleted()) {
+            return abort(404);
+        }
+
+        $transaction->complete();
+        return redirect()->to('/transaction/' . $id);
+    }
 }
