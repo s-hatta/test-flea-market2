@@ -22,6 +22,11 @@ class TransactionController extends Controller
         $otherUser = User::where('id', ($transaction->seller_id === $user->id)? $transaction->buyer_id : $transaction->seller_id)->first();
         $messages = $transaction->messages()->orderBy('created_at', 'asc')->get();
 
+        /* 未読メッセージを既読にする */
+        $unreadMessages = Message::getUnreadMessages($id, $user->id);
+        foreach ($unreadMessages as $message) {
+            $message->markAsRead();
+        }
         return view('transaction.transaction_detail', compact(
             'transaction',
             'otherTransactions',
