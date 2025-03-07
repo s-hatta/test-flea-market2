@@ -48,8 +48,8 @@
         </button>
         <button class="tab-button {{ request()->query('tab') === 'transaction' ? 'active' : '' }}" type="button" onclick="location.href='{{ url('/mypage/?tab=transaction') }}'">
             取引中
-            @if($unreadCount>0)
-                <p class="transacition-unread">{{$unreadCount}}</p>
+            @if($unreadTransactionCount>0)
+                <p class="transacition-unread">{{$unreadTransactionCount}}</p>
             @endif
         </button>
     </div>
