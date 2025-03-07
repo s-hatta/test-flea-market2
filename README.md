@@ -2,11 +2,6 @@
 
 ## 環境構築
 
-0.  注意事項  
-    本アプリはStripeによる決済処理をテスト環境にておこないます。  
-    事前にホストマシンへのStripeCLIのインストールをお願いします。
-	（参考：[https://docs.stripe.com/stripe-cli](https://docs.stripe.com/stripe-cli)）
-    
 1.  はじめに
 ```
 $ コマンドラインで実行するコマンドであることをあらわす
@@ -15,21 +10,18 @@ $ コマンドラインで実行するコマンドであることをあらわす
 
 2.  リポジトリのコピー
 ```
-$ git clone git@github.com:s-hatta/test-flea-market.git
+$ git clone git@github.com:s-hatta/test-flea-market2.git
 ```
 
 3.  .envファイルの設定
 ```
-$ cd test-flea-market/
+$ cd test-flea-market2/
 $ cp src/.env.example src/.env
 ```
 
 4.  .envファイルを編集（+は追加する行、-は削除する行）
 ```
 // 前略
-- APP_TIMEZONE=Asia_Tokyo
-+ APP_TIMEZONE=Asia/Tokyo
-// 中略
 - # DB_HOST=127.0.0.1
 - # DB_PORT=3306
 - # DB_DATABASE=laravel
@@ -40,13 +32,6 @@ $ cp src/.env.example src/.env
 + DB_DATABASE=laravel_db
 + DB_USERNAME=laravel_user
 + DB_PASSWORD=laravel_pass
-//中略
-- STRIPE_SECRET_KEY=sk_test_~~~
-- STRIPE_PUBLIC_KEY=pk_test_~~~
-- STRIPE_WEBHOOK_SECRET=whsec_~~~
-+ STRIPE_SECRET_KEY=環境に合わせて記述
-+ STRIPE_PUBLIC_KEY=環境に合わせて記述
-+ STRIPE_WEBHOOK_SECRET=環境に合わせて記述
 // 後略
 ```
 
@@ -88,13 +73,12 @@ $ docker compose exec php bash
     - fortify 1.24.5
     - Laravel Dusk
 - MySQL 8.0.40
-- phpMyAdmin 5.2.1
+- phpMyAdmin 5.2.2
 - nginx 1.26.2
-- Stripe CLI
 - Selenium
 
 ## ER図
-![er drawio](https://github.com/user-attachments/assets/6067458c-c9cb-4873-bf26-dcc0fbddacf5)
+![er2 drawio](https://github.com/user-attachments/assets/c4caaa07-9ef8-4cd5-bb7b-3a4e6ce1e195)
 
 ## URL
 - 開発環境：http://localhost/
@@ -104,6 +88,27 @@ $ docker compose exec php bash
 ## テスト用ユーザー
  - メールアドレス：test@example.com
  - パスワード：password
+
+## ダミー商品データ
+|商品ID|商品名|価格|商品説明|コンディション|
+|-----|-----|-----|-----|-----|
+|CO01|腕時計|15,000|スタイリッシュなデザインのメンズ腕時計|良好|
+|CO02|HDD|5,000|高速で信頼性の高いハードディスク|目立った傷や汚れなし|
+|CO03|玉ねぎ3束|300|新鮮な玉ねぎ3束のセット|やや傷や汚れあり|
+|CO04|革靴|4,000|クラシックなデザインの革靴|状態が悪い|
+|CO05|ノートPC|45,000|高性能なノートパソコン|良好|
+|CO06|マイク|8,000|高音質のレコーディング用マイク|目立った傷や汚れなし|
+|CO07|ショルダーバッグ|3,500|おしゃれなショルダーバッグ|やや傷や汚れあり|
+|CO08|タンブラー|500|使いやすいタンブラー|状態が悪い|
+|CO09|コーヒーミル|4,000|手動のコーヒーミル|良好|
+|CO10|メイクセット|2,500|便利なメイクアップセット|目立った傷や汚れなし|
+
+## ダミーユーザーデータ
+|ユーザー名|メールアドレス|パスワード|備考|
+|-----|-----|-----|-----|
+|seller001|seller001@example.com|password|CO01とCO05を出品している|
+|seller002|seller002@example.com|password|CO02とCO06を出品している|
+|seller003|seller003@example.com|password|どの商品も出品しておらず紐づけされていない|
 
 ## テストの実行手順
 ※テスト実行後はマイグレーションとシーディングをおこなうこと
