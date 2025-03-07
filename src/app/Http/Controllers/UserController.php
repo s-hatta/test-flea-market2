@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\Item;
 use App\Models\Address;
 use App\Models\Order;
+use App\Models\Transaction;
+use App\Models\Rating;
 use App\Http\Requests\ProfileRequest;
 use DateTime;
 
@@ -18,20 +20,39 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $items = null;
+        $transactions = null;
         $tab = $request->query('tab');
+        $unreadTransactionCount = Transaction::getUnreadTransactionsCount($user->id);
+        $averageRating = Rating::getUserAverageRating($user->id);
         switch($tab) {
             case 'sell':
             default:
                 $items = Item::where('owner_id', '=', Auth::id())->get();
                 break;
-                
+
             case 'buy':
-                $items = Order::where('payment_status','paid')->where('user_id', Auth::id())->with('item')->get()->pluck('item');
+                $items = Order::where('user_id', Auth::id())->with('item')->get()->pluck('item');
                 break;
+
+            case 'transaction':
+                /* 取引中、または評価が完了していない取引 */
+                $transactions = Transaction::where(function($query) use ($user) {
+                    $query->where('seller_id', $user->id)
+                        ->orWhere('buyer_id', $user->id);
+                })->where(function($query) use ($user) {
+                    $query->where('status', Transaction::STATUS_IN_PROGRESS)
+                        ->orWhere(function($query) use ($user) {
+                            $query->where('status', Transaction::STATUS_COMPLETED)
+                                ->whereDoesntHave('ratings', function($rating) use ($user) {
+                                    $rating->where('rater_id', $user->id);
+                                });
+                        });
+                })->orderBy('updated_at', 'desc')->get();
+                return view('mypage/profile', compact('transactions','unreadTransactionCount','averageRating'));
         }
-        return view('mypage/profile', compact('items'));
+        return view('mypage/profile', compact('items','unreadTransactionCount','averageRating'));
     }
-    
+
     public function verify($request)
     {
         $id = $request;
@@ -44,11 +65,11 @@ class UserController extends Controller
         $user->save();
         return view('auth.login')->with('message','送られたメール本文内のURLをクリックして登録を完了してください');
     }
-    
+
     public function edit()
     {
         $user = Auth::user();
-        
+
          /* ユーザーに住所情報がない場合は追加する */
         if( is_null($user->address_id) ) {
             $address = Address::create([
@@ -61,12 +82,12 @@ class UserController extends Controller
             }
         return view('mypage/profile_edit', compact('user'));
     }
-    
+
     public function update(ProfileRequest $request)
     {
         $user = Auth::user();
         $user->name = $request->input('name');
-        
+
         if ($user->address_id)
         {
             $address = $user->address;
@@ -83,7 +104,7 @@ class UserController extends Controller
             ]);
             $user->address_id = $address->id;
         }
-        
+
         if ($request->hasFile('profile_image'))
         {
             $file = $request->file('profile_image');

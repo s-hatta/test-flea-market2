@@ -41,12 +41,18 @@
     background: #d9d9d9;
 }
 
+/* ユーザー情報エリア */
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
 /* ユーザー名 */
 .profile-name {
     font-size: 36px;
     font-weight: bold;
     margin: 0;
-    flex-grow: 1;
 }
 
 /* 編集ボタン */
@@ -58,6 +64,18 @@
     text-decoration: none;
     font-size: 26px;
     font-weight: bold;
+    white-space: nowrap;
+}
+
+/* 評価星 */
+.rating-stars {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+.rating-star {
+    width: 40px;
+    height: 40px;
 }
 
 /*=============================================================================
@@ -73,6 +91,7 @@
 
 /* ボタン */
 .tab-button {
+    display: flex;
     margin-left: 50px;
     background: none;
     border: none;
@@ -85,6 +104,15 @@
 .tab-button.active {
     color: #ff0000;
     font-weight: bold;
+}
+
+.transacition-unread {
+    margin-left: 10px;
+    width: 27px;
+    height: 27px;
+    border-radius: 10rem;
+    background: red;
+    color: white;
 }
 
 /******************************************************************************
@@ -115,6 +143,11 @@
         font-size: 16px;
         padding: 8px 16px;
     }
+
+    .rating-star {
+        width: 25px;
+        height: 25px;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -134,5 +167,10 @@
     .tab-button {
         font-size: 14px;
         padding: 6px 12px;
+    }
+
+    .rating-star {
+        width: 20px;
+        height: 20px;
     }
 }

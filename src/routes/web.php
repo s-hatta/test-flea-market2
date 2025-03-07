@@ -1,13 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\TransactionController;
 
 Route::middleware('guest')->group(function () {
     Route::get('register',[RegisterController::class,'create']);
@@ -26,13 +26,16 @@ Route::middleware('auth', 'verified')->group(function () {
 	Route::post('/comments/{id}', [CommentController::class, 'store'])->name('comments.store');
     Route::get('/purchase/{id}', [PurchaseController::class, 'index']);
     Route::post('/purchase/{id}', [PurchaseController::class, 'execute']);
-    Route::get('/purchase/success/{order}', [PurchaseController::class, 'success'])->name('purchase.success');
-    Route::get('/purchase/cancel/{order}', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
     Route::get('/purchase/address/{id}', [PurchaseController::class, 'edit']);
     Route::post('/purchase/address/{id}', [PurchaseController::class, 'update']);
     Route::get('/mypage', [UserController::class, 'index']);
     Route::get('/mypage/profile', [UserController::class, 'edit']);
     Route::post('/mypage/profile', [UserController::class, 'update'])->name('profile.update');
+    Route::get('/transaction/{id}', [TransactionController::class, 'show']);
+    Route::post('/transaction/{id}/message', [TransactionController::class, 'store']);
+    Route::put('/transaction/{id}/message/{messageId}', [TransactionController::class, 'update'])->name('transaction.message.update');
+    Route::delete('/transaction/{id}/message/{messageId}', [TransactionController::class, 'delete'])->name('transaction.message.delete');
+    Route::post('/transaction/{id}/complete', [TransactionController::class, 'complete'])->name('transaction.complete');
+    Route::post('/transaction/{id}/rate', [TransactionController::class, 'submitRating'])->name('transaction.rate');
 });
 Route::get('/email/verify/{id}/{hash}', [UserController::class, 'verify'])->name('verification.verify');
-Route::post('/webhook/stripe', [PurchaseController::class, 'webhook'])->name('stripe.webhook')->withoutMiddleware(ValidateCsrfToken::class);
