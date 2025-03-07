@@ -127,4 +127,20 @@ class Transaction extends Model
                 });
         })->orderBy('updated_at', 'desc')->get();
     }
+    
+    /**
+     * ユーザーが関与している取引で未読メッセージがある取引の数を取得する
+     */
+    public static function getUnreadTransactionsCount($userId)
+    {
+        return self::where(function($query) use ($userId) {
+            $query->where('seller_id', $userId)
+                ->orWhere('buyer_id', $userId);
+        })
+        ->whereHas('messages', function($query) use ($userId) {
+            $query->where('user_id', '!=', $userId)
+                ->where('is_read', false);
+        })
+        ->count();
+    }
 }

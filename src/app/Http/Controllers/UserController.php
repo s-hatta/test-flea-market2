@@ -11,7 +11,6 @@ use App\Models\Address;
 use App\Models\Order;
 use App\Models\Transaction;
 use App\Models\Rating;
-use App\Models\Message;
 use App\Http\Requests\ProfileRequest;
 use DateTime;
 
@@ -23,7 +22,7 @@ class UserController extends Controller
         $items = null;
         $transactions = null;
         $tab = $request->query('tab');
-        $unreadCount = Message::getTotalUnreadCount($user->id);
+        $unreadTransactionCount = Transaction::getUnreadTransactionsCount($user->id);
         $averageRating = Rating::getUserAverageRating($user->id);
         switch($tab) {
             case 'sell':
@@ -49,9 +48,9 @@ class UserController extends Controller
                                 });
                         });
                 })->orderBy('updated_at', 'desc')->get();
-                return view('mypage/profile', compact('transactions','unreadCount','averageRating'));
+                return view('mypage/profile', compact('transactions','unreadTransactionCount','averageRating'));
         }
-        return view('mypage/profile', compact('items','unreadCount','averageRating'));
+        return view('mypage/profile', compact('items','unreadTransactionCount','averageRating'));
     }
 
     public function verify($request)

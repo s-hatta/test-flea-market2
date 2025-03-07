@@ -58,18 +58,4 @@ class Message extends Model
             ->where('is_read', false)
             ->get();
     }
-
-    /**
-     * すべての未読メッセージの数を取得する
-     */
-    public static function getTotalUnreadCount(int $userId)
-    {
-        return self::whereHas('transaction', function ($query) use ($userId) {
-            $query->where('seller_id', $userId)
-                ->orWhere('buyer_id', $userId);
-        })
-        ->where('user_id', '!=', $userId)
-        ->where('is_read', false)
-        ->count();
-    }
 }
