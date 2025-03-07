@@ -142,7 +142,7 @@ class TransactionController extends Controller
 
         /* 評価完了していれば商品一覧へ */
         if (Rating::hasUserRated($id, $user->id)) {
-            return redirect('/mypage?tab=transaction');
+            return redirect('/');
         }
 
         $ratedUserId = ($user->id === $transaction->seller_id)
@@ -156,6 +156,6 @@ class TransactionController extends Controller
         $rating->rated_user_id = $ratedUserId;
         $rating->score = $request->score;
         $rating->save();
-        return redirect('/mypage?tab=transaction');
+        return redirect('/');
     }
 }
