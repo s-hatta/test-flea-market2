@@ -230,6 +230,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* 編集フォーム表示 */
 function showEditForm(messageId) {
+    const messageWrapper = document.querySelector(`#message-${messageId}`);
+    messageWrapper.classList.add('editing');
     document.querySelector(`#message-${messageId} .user-info-right`).style.display = 'none';
     document.querySelector(`#message-${messageId} .message-content`).style.display = 'none';
     document.querySelector(`#message-${messageId} .message-actions`).style.display = 'none';
@@ -238,6 +240,8 @@ function showEditForm(messageId) {
 
 /* 編集フォーム非表示 */
 function hideEditForm(messageId) {
+    const messageWrapper = document.querySelector(`#message-${messageId}`);
+    messageWrapper.classList.remove('editing');
     document.querySelector(`#message-${messageId} .user-info-right`).style.display = 'flex';
     document.querySelector(`#message-${messageId} .message-content`).style.display = 'block';
     document.querySelector(`#message-${messageId} .message-actions`).style.display = 'flex';
