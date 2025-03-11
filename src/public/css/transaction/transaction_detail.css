@@ -151,6 +151,10 @@
 .message-right-container {
     max-width: 70%;
 }
+.message-wrapper.editing .message-right-container {
+    width: 100%;
+    max-width: 100%;
+}
 
 /* 左側（相手のメッセージ） */
 .message-left {
@@ -393,6 +397,7 @@
 .edit-form {
     margin-top: 10px;
     width: 100%;
+    max-width: none;
 }
 
 .edit-textarea {
