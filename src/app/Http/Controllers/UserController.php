@@ -36,18 +36,7 @@ class UserController extends Controller
 
             case 'transaction':
                 /* 取引中、または評価が完了していない取引 */
-                $transactions = Transaction::where(function($query) use ($user) {
-                    $query->where('seller_id', $user->id)
-                        ->orWhere('buyer_id', $user->id);
-                })->where(function($query) use ($user) {
-                    $query->where('status', Transaction::STATUS_IN_PROGRESS)
-                        ->orWhere(function($query) use ($user) {
-                            $query->where('status', Transaction::STATUS_COMPLETED)
-                                ->whereDoesntHave('ratings', function($rating) use ($user) {
-                                    $rating->where('rater_id', $user->id);
-                                });
-                        });
-                })->orderBy('updated_at', 'desc')->get();
+                $transactions = Transaction::getUserIncompleteTransactions($user->id);
                 return view('mypage/profile', compact('transactions','unreadTransactionCount','averageRating'));
         }
         return view('mypage/profile', compact('items','unreadTransactionCount','averageRating'));

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Transaction extends Model
 {
@@ -108,11 +109,23 @@ class Transaction extends Model
     }
 
     /**
+     * 取引クエリに新規メッセージが来た順のソートを適用する
+     */
+    public static function applySortByLatestReceivedMessage($query, int $userId)
+    {
+        return $query->select('transactions.*')
+            ->leftJoin(DB::raw('(SELECT transaction_id, MAX(created_at) as last_message_at FROM messages WHERE user_id != '.$userId.' GROUP BY transaction_id) as latest_messages'), 
+                'transactions.id', '=', 'latest_messages.transaction_id')
+            ->orderByDesc('latest_messages.last_message_at')
+            ->orderByDesc('transactions.created_at'); /* メッセージがない取引は作成日時でソート */
+    }
+    
+    /**
      * ユーザーが保持している未完了の取引を取得する
      */
     public static function getOtherIncompleteTransactions(int $userId, int $transactionId)
     {
-        return Transaction::where(function($query) use($userId) {
+        $query = Transaction::where(function($query) use($userId) {
             $query->where('seller_id', $userId)
                 ->orWhere('buyer_id', $userId);
         })
@@ -125,7 +138,32 @@ class Transaction extends Model
                             $rating->where('rater_id', $userId);
                         });
                 });
-        })->orderBy('updated_at', 'desc')->get();
+        });
+        return self::applySortByLatestReceivedMessage($query, $userId)
+            ->with(['item', 'messages'])
+            ->get();
+    }
+    
+    /**
+     * ユーザーが関与している取引を取得する
+     */
+    public static function getUserIncompleteTransactions(int $userId)
+    {
+        $query = Transaction::where(function($query) use ($userId) {
+            $query->where('seller_id', $userId)
+                ->orWhere('buyer_id', $userId);
+        })
+        ->where(function($query) use ($userId) {
+            $query->where('status', Transaction::STATUS_IN_PROGRESS)
+                ->orWhere(function($query) use ($userId) {
+                    $query->where('status', Transaction::STATUS_COMPLETED)
+                        ->whereDoesntHave('ratings', function($rating) use ($userId) {
+                            $rating->where('rater_id', $userId);
+                        });
+                });
+        });
+        
+        return self::applySortByLatestReceivedMessage($query, $userId)->get();
     }
     
     /**

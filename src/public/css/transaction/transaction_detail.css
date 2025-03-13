@@ -151,6 +151,10 @@
 .message-right-container {
     max-width: 70%;
 }
+.message-wrapper.editing .message-right-container {
+    width: 100%;
+    max-width: 100%;
+}
 
 /* 左側（相手のメッセージ） */
 .message-left {
@@ -222,6 +226,8 @@
     padding: 15px;
     border-radius: 4px;
     position: relative;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .message-image-content {
@@ -259,6 +265,8 @@
     flex: 1;
     padding: 10px 10px;
     border: solid #5f5f5f 1px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .select-image {
@@ -389,6 +397,7 @@
 .edit-form {
     margin-top: 10px;
     width: 100%;
+    max-width: none;
 }
 
 .edit-textarea {
@@ -397,6 +406,8 @@
     border-radius: 5px;
     margin-bottom: 10px;
     resize: vertical;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .edit-actions {
