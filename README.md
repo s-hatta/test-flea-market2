@@ -76,6 +76,7 @@ $ docker compose exec php bash
 - phpMyAdmin 5.2.2
 - nginx 1.26.2
 - Selenium
+- MailHog
 
 ## ER図
 ![er2 drawio](https://github.com/user-attachments/assets/c4caaa07-9ef8-4cd5-bb7b-3a4e6ce1e195)
@@ -109,6 +110,12 @@ $ docker compose exec php bash
 |seller001|seller001@example.com|password|CO01とCO05を出品している|
 |seller002|seller002@example.com|password|CO02とCO06を出品している|
 |seller003|seller003@example.com|password|どの商品も出品しておらず紐づけされていない|
+
+## 取引完了後の通知メールについて
+MailHogにて実装いたしました。
+下記画像のように、購入者が取引完了をすると出品者に取引完了のメールが自動送信されます。
+![001](https://github.com/user-attachments/assets/4df04a90-8385-43ca-8d02-b45b76a63097)
+
 
 ## テストの実行手順
 ※テスト実行後はマイグレーションとシーディングをおこなうこと
